@@ -76,10 +76,10 @@ public class FlingCardListener implements View.OnTouchListener {
         this.parentHeight = ((ViewGroup) frame.getParent()).getHeight();
         this.BASE_ROTATION_DEGREES = rotation_degrees;
         this.mFlingListener = flingListener;
-        this.RECT_TOP = new Rect(frame.getLeft(), 0, frame.getRight(), frame.getTop());
-        this.RECT_BOTTOM = new Rect(frame.getLeft(), frame.getBottom(), frame.getRight(), parentHeight);
-        this.RECT_LEFT = new Rect(0, frame.getTop(), frame.getLeft(), frame.getBottom());
-        this.RECT_RIGHT = new Rect(frame.getRight(), frame.getTop(), parentWidth, frame.getBottom());
+        this.RECT_TOP = new Rect((int) Math.max(frame.getLeft(), leftBorder()), 0, (int) Math.min(frame.getRight(), rightBorder()), (int) topBorder());
+        this.RECT_BOTTOM = new Rect((int) Math.max(frame.getLeft(), leftBorder()), (int) bottomBorder(), (int) Math.min(frame.getRight(), rightBorder()), parentHeight);
+        this.RECT_LEFT = new Rect(0, (int) Math.max(frame.getTop(), topBorder()), (int) leftBorder(), (int) Math.min(frame.getBottom(), bottomBorder()));
+        this.RECT_RIGHT = new Rect((int) rightBorder(), (int) Math.max(frame.getTop(), topBorder()), parentWidth, (int) Math.min(frame.getBottom(), bottomBorder()));
     }
 
 
@@ -211,7 +211,7 @@ public class FlingCardListener implements View.OnTouchListener {
             mFlingListener.onScroll(1.0f);
         } else if(movedBeyondTopBorder()){
             Log.i("Swipe ", "top");
-            onSelectedY(false, getExitPointX(-objectH), 100);
+            onSelectedY(true, getExitPointX(-objectH), 100);
             mFlingListener.onScroll(-1.0f);
         } else if(movedBeyondBottomBorder()){
             Log.i("Swipe ", "bottom");
@@ -288,7 +288,7 @@ public class FlingCardListener implements View.OnTouchListener {
         if (isTop) {
             exitY = -objectH - getRotationWidthOffset();
         } else {
-            exitY = parentWidth + getRotationWidthOffset();
+            exitY = parentHeight + getRotationWidthOffset();
         }
 
         this.frame.animate()
@@ -395,7 +395,7 @@ public class FlingCardListener implements View.OnTouchListener {
         y[0] = objectY;
         y[1] = aPosY;
 
-        LinearRegression regression = new LinearRegression(x, y);
+        LinearRegression regression = new LinearRegression(y, x);
 
         //Your typical y = ax+b linear regression
         return (float) regression.slope() * exitYPoint + (float) regression.intercept();

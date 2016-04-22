@@ -81,18 +81,19 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         return mActiveCard;
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
+//    @Override
+//    protected void onDraw(Canvas canvas) {
+//        super.onDraw(canvas);
 //        this.RECT_TOP = new Rect(frame.getLeft(), 0, objectW, (int) topBorder());
 //        this.RECT_BOTTOM = new Rect(frame.getLeft(), (int) bottomBorder(), objectW, parentHeight);
 //        this.RECT_LEFT = new Rect(0, frame.getTop(), (int) leftBorder(), frame.getBottom());
 //        this.RECT_RIGHT = new Rect((int) rightBorder(), frame.getTop(), parentWidth, frame.getBottom());
-        canvas.drawRect((float)mActiveCard.getLeft(), 0f, (float)mActiveCard.getRight(), (float)mActiveCard.getTop(), new Paint());
-        canvas.drawRect((float)mActiveCard.getLeft(), mActiveCard.getBottom(), (float)mActiveCard.getRight(), getBottom(), new Paint());
-        canvas.drawRect(0f, (float)mActiveCard.getTop(), (float)mActiveCard.getLeft(), (float)mActiveCard.getBottom(), new Paint());
-        canvas.drawRect((float)mActiveCard.getRight(), (float)mActiveCard.getTop(), getWidth(), (float)mActiveCard.getBottom(), new Paint());
-    }
+
+//        canvas.drawRect((int) Math.max(mActiveCard.getLeft(), leftBorder()), 0, (int) Math.min(mActiveCard.getRight(), rightBorder()), (int) topBorder(), new Paint());
+//        canvas.drawRect((int) Math.max(mActiveCard.getLeft(), leftBorder()), (int) bottomBorder(), (int) Math.min(mActiveCard.getRight(), rightBorder()), getHeight(), new Paint());
+//        canvas.drawRect(0, (int) Math.max(mActiveCard.getTop(), topBorder()), (int) leftBorder(), (int) Math.min(mActiveCard.getBottom(), bottomBorder()), new Paint());
+//        canvas.drawRect((int) rightBorder(), (int) Math.max(mActiveCard.getTop(), topBorder()), getWidth(), (int) Math.min(mActiveCard.getBottom(), bottomBorder()), new Paint());
+//    }
 
     @Override
     public void requestLayout() {
@@ -134,7 +135,7 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         }
 
         mInLayout = false;
-        
+
         if(adapterCount <= MIN_ADAPTER_STACK) mFlingListener.onAdapterAboutToEmpty(adapterCount);
     }
 
