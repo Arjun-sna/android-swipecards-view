@@ -3,6 +3,7 @@ package in.arjsna.swipecardlib;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.graphics.PointF;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +23,10 @@ public class FlingCardListener implements View.OnTouchListener {
 
     private static final String TAG = FlingCardListener.class.getSimpleName();
     private static final int INVALID_POINTER_ID = -1;
+    private Rect RECT_TOP;
+    private Rect RECT_BOTTOM;
+    private Rect RECT_LEFT;
+    private Rect RECT_RIGHT;
 
     private final float objectX;
     private final float objectY;
@@ -71,7 +76,10 @@ public class FlingCardListener implements View.OnTouchListener {
         this.parentHeight = ((ViewGroup) frame.getParent()).getHeight();
         this.BASE_ROTATION_DEGREES = rotation_degrees;
         this.mFlingListener = flingListener;
-
+        this.RECT_TOP = new Rect(frame.getLeft(), 0, frame.getRight(), frame.getTop());
+        this.RECT_BOTTOM = new Rect(frame.getLeft(), frame.getBottom(), frame.getRight(), parentHeight);
+        this.RECT_LEFT = new Rect(0, frame.getTop(), frame.getLeft(), frame.getBottom());
+        this.RECT_RIGHT = new Rect(frame.getRight(), frame.getTop(), parentWidth, frame.getBottom());
     }
 
 
@@ -193,16 +201,20 @@ public class FlingCardListener implements View.OnTouchListener {
     private boolean resetCardViewOnStack() {
         if (movedBeyondLeftBorder()) {
             // Left Swipe
+            Log.i("Swipe ", "left");
             onSelectedX(true, getExitPoint(-objectW), 100);
             mFlingListener.onScroll(-1.0f);
         } else if (movedBeyondRightBorder()) {
             // Right Swipe
+            Log.i("Swipe ", "right");
             onSelectedX(false, getExitPoint(parentWidth), 100);
             mFlingListener.onScroll(1.0f);
         } else if(movedBeyondTopBorder()){
+            Log.i("Swipe ", "top");
             onSelectedY(false, getExitPointX(-objectH), 100);
             mFlingListener.onScroll(-1.0f);
         } else if(movedBeyondBottomBorder()){
+            Log.i("Swipe ", "bottom");
             onSelectedY(false, getExitPointX(parentHeight), 100);
             mFlingListener.onScroll(1.0f);
         }
@@ -228,19 +240,30 @@ public class FlingCardListener implements View.OnTouchListener {
 
 
     private boolean movedBeyondLeftBorder() {
-        return aPosX + halfWidth < leftBorder();
+        int centerX = (int) (frame.getX() + halfWidth);
+        int centerY = (int) (frame.getY() + halfHeight);
+        return (RECT_LEFT.contains(centerX, centerY) || (centerX < RECT_LEFT.left && RECT_LEFT.contains(0, centerY)));
     }
 
     private boolean movedBeyondRightBorder() {
-        return aPosX + halfWidth > rightBorder();
+        int centerX = (int) (frame.getX() + halfWidth);
+        int centerY = (int) (frame.getY() + halfHeight);
+        return (RECT_RIGHT.contains(centerX, centerY) || (centerX > RECT_RIGHT.right && RECT_RIGHT.contains(RECT_RIGHT.left, centerY)));
+//        return aPosX + halfWidth > rightBorder();
     }
 
     private boolean movedBeyondBottomBorder() {
-        return aPosY + halfHeight > bottomBorder();
+        int centerX = (int) (frame.getX() + halfWidth);
+        int centerY = (int) (frame.getY() + halfHeight);
+        return (RECT_BOTTOM.contains(centerX, centerY) || (centerY > RECT_BOTTOM.bottom && RECT_BOTTOM.contains(centerX, RECT_BOTTOM.top)));
+//        return aPosY + halfHeight > bottomBorder();
     }
 
     private boolean movedBeyondTopBorder() {
-        return aPosY + halfHeight < topBorder();
+        int centerX = (int) (frame.getX() + halfWidth);
+        int centerY = (int) (frame.getY() + halfHeight);
+        return (RECT_TOP.contains(centerX, centerY) || (centerY < RECT_TOP.top && RECT_TOP.contains(centerX, 0)));
+//        return aPosY + halfHeight < topBorder();
     }
 
     public float leftBorder() {

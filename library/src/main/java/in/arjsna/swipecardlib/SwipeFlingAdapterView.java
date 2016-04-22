@@ -4,6 +4,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -79,6 +81,18 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         return mActiveCard;
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+//        this.RECT_TOP = new Rect(frame.getLeft(), 0, objectW, (int) topBorder());
+//        this.RECT_BOTTOM = new Rect(frame.getLeft(), (int) bottomBorder(), objectW, parentHeight);
+//        this.RECT_LEFT = new Rect(0, frame.getTop(), (int) leftBorder(), frame.getBottom());
+//        this.RECT_RIGHT = new Rect((int) rightBorder(), frame.getTop(), parentWidth, frame.getBottom());
+        canvas.drawRect((float)mActiveCard.getLeft(), 0f, (float)mActiveCard.getRight(), (float)mActiveCard.getTop(), new Paint());
+        canvas.drawRect((float)mActiveCard.getLeft(), mActiveCard.getBottom(), (float)mActiveCard.getRight(), getBottom(), new Paint());
+        canvas.drawRect(0f, (float)mActiveCard.getTop(), (float)mActiveCard.getLeft(), (float)mActiveCard.getBottom(), new Paint());
+        canvas.drawRect((float)mActiveCard.getRight(), (float)mActiveCard.getTop(), getWidth(), (float)mActiveCard.getBottom(), new Paint());
+    }
 
     @Override
     public void requestLayout() {
