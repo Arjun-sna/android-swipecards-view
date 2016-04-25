@@ -21,7 +21,6 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
     private float CURRENT_TRANSY_OFFSET = 0;
     private float CURRENT_SCALEX_OFFSET = 0;
     private float CURRENT_SCALEY_OFFSET = 0;
-    private int MARGIN_OFFSET = 0;
     private int MAX_VISIBLE = 3;
     private int MIN_ADAPTER_STACK = 6;
     private float ROTATION_DEGREES = 15.f;
@@ -175,7 +174,6 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
     }
 
     private void resetOffsets() {
-        MARGIN_OFFSET = 0;
         CURRENT_TRANSY_OFFSET = 0;
         CURRENT_SCALEX_OFFSET = 0;
         CURRENT_SCALEY_OFFSET = 0;
@@ -260,7 +258,7 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
     }
 
     public void relayoutChild(View child, float scrollDis, int childcount){
-        float absScrollDis = Math.abs(scrollDis);
+        float absScrollDis = scrollDis > 1 ? 1 : scrollDis;
         child.setScaleX((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
         child.setScaleY((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
 //        child.setTranslationX((float) (child.getTranslationX() + scrollDis * 0.001));
@@ -310,7 +308,7 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
                                 mFlingListener.onScroll(scrollProgressPercent);
                                 int childCount = getChildCount() - 1;
                                 while (childCount > 1){
-                                    relayoutChild(getChildAt(childCount - 1), scrollProgressPercent, childCount - 1);
+                                    relayoutChild(getChildAt(childCount - 1), Math.abs(scrollProgressPercent), childCount - 1);
                                     childCount --;
                                 }
                             }

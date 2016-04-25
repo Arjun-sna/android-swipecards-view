@@ -61,12 +61,12 @@ public class MyActivity extends Activity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-                makeToast(MyActivity.this, "Left!");
+//                makeToast(MyActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                makeToast(MyActivity.this, "Right!");
+//                makeToast(MyActivity.this, "Right!");
             }
 
             @Override
