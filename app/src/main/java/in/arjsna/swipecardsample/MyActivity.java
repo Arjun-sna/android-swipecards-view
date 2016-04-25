@@ -18,8 +18,8 @@ import in.arjsna.swipecardlib.SwipeFlingAdapterView;
 
 public class MyActivity extends Activity {
 
-    private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
+    private ArrayList<Card> al;
+    private CardsAdapter arrayAdapter;
     private int i;
 
     @InjectView(R.id.frame)
@@ -34,16 +34,8 @@ public class MyActivity extends Activity {
 
 
         al = new ArrayList<>();
-        al.add("php");
-        al.add("c");
-        al.add("python");
-        al.add("java");
-        al.add("html");
-        al.add("c++");
-        al.add("css");
-        al.add("javascript");
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        getDummyData(al);
+        arrayAdapter = new CardsAdapter(this, al );
 
 
         flingContainer.setAdapter(arrayAdapter);
@@ -107,24 +99,83 @@ public class MyActivity extends Activity {
 
     }
 
+    private void getDummyData(ArrayList<Card> al) {
+        Card card = new Card();
+        card.name = "John";
+        card.imageId = R.drawable.faces1;
+        al.add(card);
+
+        Card card2 = new Card();
+        card2.name = "Mike";
+        card2.imageId = R.drawable.faces2;
+        al.add(card2);
+        Card card3 = new Card();
+        card3.name = "Ronoldo";
+        card3.imageId = R.drawable.faces3;
+        al.add(card3);
+        Card card4 = new Card();
+        card4.name = "Messi";
+        card4.imageId = R.drawable.faces4;
+        al.add(card4);
+        Card card5 = new Card();
+        card5.name = "Sachin";
+        card5.imageId = R.drawable.faces5;
+        al.add(card5);
+        Card card56 = new Card();
+        card56.name = "Dhoni";
+        card56.imageId = R.drawable.faces6;
+        al.add(card56);
+        Card card7 = new Card();
+        card7.name = "Kohli";
+        card7.imageId = R.drawable.faces7;
+        al.add(card7);
+        Card card8 = new Card();
+        card8.name = "Pandya";
+        card8.imageId = R.drawable.faces8;
+        al.add(card8);
+        Card card9 = new Card();
+        card9.name = "Nehra";
+        card9.imageId = R.drawable.faces9;
+        al.add(card9);
+        Card card10 = new Card();
+        card10.name = "Bumra";
+        card10.imageId = R.drawable.faces10;
+        al.add(card10);
+        Card card11 = new Card();
+        card11.name = "Rohit";
+        card11.imageId = R.drawable.faces11;
+        al.add(card11);
+    }
+
     static void makeToast(Context ctx, String s){
         Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
     }
 
 
-//    @OnClick(R.id.right)
-//    public void right() {
-//        /**
-//         * Trigger the right event manually.
-//         */
-//        flingContainer.getTopCardListener().selectTop();
-//    }
+    @OnClick(R.id.top)
+    public void top() {
+        /**
+         * Trigger the right event manually.
+         */
+        flingContainer.getTopCardListener().selectTop();
+    }
+
+    @OnClick(R.id.bottom)
+    public void bottom() {
+        flingContainer.getTopCardListener().selectBottom();
+    }
 //
-//    @OnClick(R.id.left)
-//    public void left() {
-//        flingContainer.getTopCardListener().selectBottom();
-//    }
-//
+
+    @OnClick(R.id.left)
+    public void left() {
+        flingContainer.getTopCardListener().selectLeft();
+    }
+
+
+    @OnClick(R.id.right)
+    public void right() {
+        flingContainer.getTopCardListener().selectRight();
+    }
 
 
 
