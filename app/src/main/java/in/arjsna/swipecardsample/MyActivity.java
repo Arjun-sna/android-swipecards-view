@@ -112,19 +112,19 @@ public class MyActivity extends Activity {
     }
 
 
-    @OnClick(R.id.right)
-    public void right() {
-        /**
-         * Trigger the right event manually.
-         */
-        flingContainer.getTopCardListener().selectTop();
-    }
-
-    @OnClick(R.id.left)
-    public void left() {
-        flingContainer.getTopCardListener().selectBottom();
-    }
-
+//    @OnClick(R.id.right)
+//    public void right() {
+//        /**
+//         * Trigger the right event manually.
+//         */
+//        flingContainer.getTopCardListener().selectTop();
+//    }
+//
+//    @OnClick(R.id.left)
+//    public void left() {
+//        flingContainer.getTopCardListener().selectBottom();
+//    }
+//
 
 
 

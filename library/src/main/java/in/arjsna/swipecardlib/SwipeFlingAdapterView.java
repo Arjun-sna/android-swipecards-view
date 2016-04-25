@@ -17,6 +17,9 @@ import android.widget.FrameLayout;
 public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
 
+    private float SCALEX_OFFSET = 0;
+    private float SCALEY_OFFSET = 0;
+    private int MARGIN_OFFSET = 0;
     private int MAX_VISIBLE = 4;
     private int MIN_ADAPTER_STACK = 6;
     private float ROTATION_DEGREES = 15.f;
@@ -77,16 +80,29 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 //    @Override
 //    protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
-//        this.RECT_TOP = new Rect(frame.getLeft(), 0, objectW, (int) topBorder());
-//        this.RECT_BOTTOM = new Rect(frame.getLeft(), (int) bottomBorder(), objectW, parentHeight);
-//        this.RECT_LEFT = new Rect(0, frame.getTop(), (int) leftBorder(), frame.getBottom());
-//        this.RECT_RIGHT = new Rect((int) rightBorder(), frame.getTop(), parentWidth, frame.getBottom());
-
 //        canvas.drawRect((int) Math.max(mActiveCard.getLeft(), leftBorder()), 0, (int) Math.min(mActiveCard.getRight(), rightBorder()), (int) topBorder(), new Paint());
 //        canvas.drawRect((int) Math.max(mActiveCard.getLeft(), leftBorder()), (int) bottomBorder(), (int) Math.min(mActiveCard.getRight(), rightBorder()), getHeight(), new Paint());
 //        canvas.drawRect(0, (int) Math.max(mActiveCard.getTop(), topBorder()), (int) leftBorder(), (int) Math.min(mActiveCard.getBottom(), bottomBorder()), new Paint());
 //        canvas.drawRect((int) rightBorder(), (int) Math.max(mActiveCard.getTop(), topBorder()), getWidth(), (int) Math.min(mActiveCard.getBottom(), bottomBorder()), new Paint());
 //    }
+
+
+    public float leftBorder() {
+        return getWidth() / 4.f;
+    }
+
+    public float rightBorder() {
+        return 3 * getWidth() / 4.f;
+    }
+
+    public float bottomBorder() {
+        return 3 * getHeight() / 4.f;
+    }
+
+    public float topBorder() {
+        return getHeight() / 4.f;
+    }
+
 
     @Override
     public void requestLayout() {
@@ -134,6 +150,7 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
 
     private void layoutChildren(int startingIndex, int adapterCount){
+        resetOffsets();
         while (startingIndex < Math.min(adapterCount, MAX_VISIBLE) ) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
@@ -144,11 +161,23 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         }
     }
 
+    private void resetOffsets() {
+        MARGIN_OFFSET = 0;
+        SCALEX_OFFSET = 0;
+        SCALEY_OFFSET = 0;
+    }
+
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void makeAndAddView(View child) {
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
+        lp.topMargin = lp.topMargin + MARGIN_OFFSET;
+        MARGIN_OFFSET += 30;
+        child.setScaleX((float) (child.getScaleX() - SCALEX_OFFSET));
+        child.setScaleY((float) (child.getScaleY() - SCALEY_OFFSET));
+        SCALEX_OFFSET += 0.02;
+        SCALEY_OFFSET += 0.02;
         addViewInLayout(child, 0, lp, true);
 
         final boolean needToMeasure = child.isLayoutRequested();
