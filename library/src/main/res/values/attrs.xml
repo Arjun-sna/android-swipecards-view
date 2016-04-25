@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SwipeFlingAdapterView">
+    <declare-styleable name="SwipeFlingCardView">
         <attr name="SwipeFlingStyle" format="reference"/>
         <attr name="rotation_degrees" format="float"/>
         <attr name="min_adapter_stack" format="integer"/>
         <attr name="max_visible" format="integer"/>
+        <attr name="left_swipe_detect" format="boolean"/>
+        <attr name="right_swipe_detect" format="boolean"/>
+        <attr name="top_swipe_detect" format="boolean"/>
+        <attr name="bottom_swipe_detect" format="boolean"/>
     </declare-styleable>
 
 </resources>

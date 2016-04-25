@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import in.arjsna.swipecardlib.SwipeFlingAdapterView;
+import in.arjsna.swipecardlib.SwipeFlingCardView;
 
 
 public class MyActivity extends Activity {
@@ -23,7 +22,7 @@ public class MyActivity extends Activity {
     private int i;
 
     @InjectView(R.id.frame)
-    SwipeFlingAdapterView flingContainer;
+    SwipeFlingCardView flingContainer;
 
 
     @Override
@@ -39,7 +38,7 @@ public class MyActivity extends Activity {
 
 
         flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+        flingContainer.setFlingListener(new SwipeFlingCardView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -90,7 +89,7 @@ public class MyActivity extends Activity {
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+        flingContainer.setOnItemClickListener(new SwipeFlingCardView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
                 makeToast(MyActivity.this, "Clicked!");

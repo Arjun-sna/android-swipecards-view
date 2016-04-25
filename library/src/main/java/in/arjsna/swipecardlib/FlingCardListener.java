@@ -16,6 +16,7 @@ public class FlingCardListener implements View.OnTouchListener {
 
     private static final String TAG = FlingCardListener.class.getSimpleName();
     private static final int INVALID_POINTER_ID = -1;
+    private final SwipeFlingCardView parentView;
     private Rect RECT_TOP;
     private Rect RECT_BOTTOM;
     private Rect RECT_LEFT;
@@ -51,12 +52,13 @@ public class FlingCardListener implements View.OnTouchListener {
     private float MAX_COS = (float) Math.cos(Math.toRadians(45));
 
 
-    public FlingCardListener(View frame, Object itemAtPosition, FlingListener flingListener) {
-        this(frame, itemAtPosition, 15f, flingListener);
+    public FlingCardListener(SwipeFlingCardView parent, View frame, Object itemAtPosition, FlingListener flingListener) {
+        this(parent, frame, itemAtPosition, 15f, flingListener);
     }
 
-    public FlingCardListener(View frame, Object itemAtPosition, float rotation_degrees, FlingListener flingListener) {
+    public FlingCardListener(SwipeFlingCardView parent, View frame, Object itemAtPosition, float rotation_degrees, FlingListener flingListener) {
         super();
+        this.parentView = parent;
         this.frame = frame;
         this.objectX = frame.getX();
         this.objectY = frame.getY();
@@ -192,21 +194,21 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
     private boolean resetCardViewOnStack() {
-        if (movedBeyondLeftBorder()) {
+        if (movedBeyondLeftBorder() && parentView.DETECT_LEFT_SWIPE) {
             // Left Swipe
             Log.i("Swipe ", "left");
             onSelectedX(true, getExitPoint(-objectW), 100);
             mFlingListener.onScroll(-1.0f);
-        } else if (movedBeyondRightBorder()) {
+        } else if (movedBeyondRightBorder() && parentView.DETECT_RIGHT_SWIPE) {
             // Right Swipe
             Log.i("Swipe ", "right");
             onSelectedX(false, getExitPoint(parentWidth), 100);
             mFlingListener.onScroll(1.0f);
-        } else if(movedBeyondTopBorder()){
+        } else if(movedBeyondTopBorder() && parentView.DETECT_TOP_SWIPE){
             Log.i("Swipe ", "top");
             onSelectedY(true, getExitPointX(-objectH), 100);
             mFlingListener.onScroll(-1.0f);
-        } else if(movedBeyondBottomBorder()){
+        } else if(movedBeyondBottomBorder() && parentView.DETECT_BOTTOM_SWIPE){
             Log.i("Swipe ", "bottom");
             onSelectedY(false, getExitPointX(parentHeight), 100);
             mFlingListener.onScroll(1.0f);

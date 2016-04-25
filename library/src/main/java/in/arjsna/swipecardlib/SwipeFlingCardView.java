@@ -13,11 +13,15 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.FrameLayout;
 
-public class SwipeFlingAdapterView extends BaseFlingAdapterView {
+public class SwipeFlingCardView extends BaseFlingAdapterView {
 
 
     private static final double SCALE_OFFSET = 0.04;
     private static final float TRANS_OFFSET = 45;
+    protected boolean DETECT_BOTTOM_SWIPE;
+    protected boolean DETECT_TOP_SWIPE;
+    protected boolean DETECT_RIGHT_SWIPE;
+    protected boolean DETECT_LEFT_SWIPE;
     private float CURRENT_TRANSY_VAL = 0;
     private float CURRENT_SCALE_VAL = 0;
     private int MAX_VISIBLE = 3;
@@ -35,21 +39,25 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
     private PointF mLastTouchPoint;
 
 
-    public SwipeFlingAdapterView(Context context) {
+    public SwipeFlingCardView(Context context) {
         this(context, null);
     }
 
-    public SwipeFlingAdapterView(Context context, AttributeSet attrs) {
+    public SwipeFlingCardView(Context context, AttributeSet attrs) {
         this(context, attrs, R.attr.SwipeFlingStyle);
     }
 
-    public SwipeFlingAdapterView(Context context, AttributeSet attrs, int defStyle) {
+    public SwipeFlingCardView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SwipeFlingAdapterView, defStyle, 0);
-        MAX_VISIBLE = a.getInt(R.styleable.SwipeFlingAdapterView_max_visible, MAX_VISIBLE);
-        MIN_ADAPTER_STACK = a.getInt(R.styleable.SwipeFlingAdapterView_min_adapter_stack, MIN_ADAPTER_STACK);
-        ROTATION_DEGREES = a.getFloat(R.styleable.SwipeFlingAdapterView_rotation_degrees, ROTATION_DEGREES);
+        TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SwipeFlingCardView, defStyle, 0);
+        MAX_VISIBLE = a.getInt(R.styleable.SwipeFlingCardView_max_visible, MAX_VISIBLE);
+        MIN_ADAPTER_STACK = a.getInt(R.styleable.SwipeFlingCardView_min_adapter_stack, MIN_ADAPTER_STACK);
+        ROTATION_DEGREES = a.getFloat(R.styleable.SwipeFlingCardView_rotation_degrees, ROTATION_DEGREES);
+        DETECT_LEFT_SWIPE = a.getBoolean(R.styleable.SwipeFlingCardView_left_swipe_detect, true);
+        DETECT_RIGHT_SWIPE = a.getBoolean(R.styleable.SwipeFlingCardView_right_swipe_detect, true);
+        DETECT_BOTTOM_SWIPE = a.getBoolean(R.styleable.SwipeFlingCardView_bottom_swipe_detect, true);
+        DETECT_TOP_SWIPE = a.getBoolean(R.styleable.SwipeFlingCardView_top_swipe_detect, true);
         a.recycle();
     }
 
@@ -280,7 +288,7 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
             mActiveCard = getChildAt(LAST_OBJECT_IN_STACK);
             if(mActiveCard!=null) {
 
-                flingCardListener = new FlingCardListener(mActiveCard, mAdapter.getItem(0),
+                flingCardListener = new FlingCardListener(this, mActiveCard, mAdapter.getItem(0),
                         ROTATION_DEGREES, new FlingCardListener.FlingListener() {
 
                             @Override
