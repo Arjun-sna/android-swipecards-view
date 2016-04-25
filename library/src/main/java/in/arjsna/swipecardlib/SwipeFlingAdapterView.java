@@ -14,13 +14,6 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.FrameLayout;
 
-/**
- * Created by dionysis_lorentzos on 5/8/14
- * for package com.lorentzos.swipecards
- * and project Swipe cards.
- * Use with caution dinosaurs might appear!
- */
-
 public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
 

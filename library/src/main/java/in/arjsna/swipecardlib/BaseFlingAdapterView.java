@@ -5,12 +5,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.AdapterView;
 
-/**
- * Created by dionysis_lorentzos on 6/8/14
- * for package com.lorentzos.swipecards
- * and project Swipe cards.
- * Use with caution dinausaurs might appear!
- */
 abstract class BaseFlingAdapterView extends AdapterView {
 
     private int heightMeasureSpec;
