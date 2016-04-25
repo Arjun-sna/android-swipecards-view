@@ -72,10 +72,10 @@ public class MyActivity extends Activity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-                al.add("XML ".concat(String.valueOf(i)));
-                arrayAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
-                i++;
+//                al.add("XML ".concat(String.valueOf(i)));
+//                arrayAdapter.notifyDataSetChanged();
+//                Log.d("LIST", "notified");
+//                i++;
             }
 
             @Override

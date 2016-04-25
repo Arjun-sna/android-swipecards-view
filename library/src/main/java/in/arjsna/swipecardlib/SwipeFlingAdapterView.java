@@ -152,7 +152,10 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
     private void layoutChildren(int startingIndex, int adapterCount){
         resetOffsets();
-        while (startingIndex < Math.min(adapterCount, MAX_VISIBLE) ) {
+        if(adapterCount < MAX_VISIBLE){
+            MAX_VISIBLE = adapterCount;
+        }
+        while (startingIndex < MAX_VISIBLE) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
                 makeAndAddView(newUnderChild, false);
@@ -166,8 +169,12 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
          * a base card. The scale and translation of this view is same as the one previous to
          * this.
          */
+        if(startingIndex >= adapterCount){
+            LAST_OBJECT_IN_STACK = --startingIndex;
+            return;
+        }
         View newUnderChild = mAdapter.getView(startingIndex, null, this);
-        if (newUnderChild.getVisibility() != GONE) {
+        if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
             makeAndAddView(newUnderChild, true);
             LAST_OBJECT_IN_STACK = startingIndex;
         }
@@ -261,7 +268,6 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         float absScrollDis = scrollDis > 1 ? 1 : scrollDis;
         child.setScaleX((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
         child.setScaleY((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
-//        child.setTranslationX((float) (child.getTranslationX() + scrollDis * 0.001));
         child.setTranslationY(TRANS_OFFSET * (MAX_VISIBLE - childcount) - absScrollDis * TRANS_OFFSET);
     }
 
@@ -307,9 +313,16 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
                                 Log.i("Scroll Percentage ", scrollProgressPercent + "");
                                 mFlingListener.onScroll(scrollProgressPercent);
                                 int childCount = getChildCount() - 1;
-                                while (childCount > 1){
-                                    relayoutChild(getChildAt(childCount - 1), Math.abs(scrollProgressPercent), childCount - 1);
-                                    childCount --;
+                                if(childCount < MAX_VISIBLE){
+                                    while (childCount > 0) {
+                                        relayoutChild(getChildAt(childCount - 1), Math.abs(scrollProgressPercent), childCount);
+                                        childCount--;
+                                    }
+                                } else {
+                                    while (childCount > 1) {
+                                        relayoutChild(getChildAt(childCount - 1), Math.abs(scrollProgressPercent), childCount - 1);
+                                        childCount--;
+                                    }
                                 }
                             }
 
