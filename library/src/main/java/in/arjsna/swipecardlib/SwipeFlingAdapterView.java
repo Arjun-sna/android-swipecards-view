@@ -4,8 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -18,11 +16,13 @@ import android.widget.FrameLayout;
 public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
 
-    private float TRANSY_OFFSET = 0;
-    private float SCALEX_OFFSET = 0;
-    private float SCALEY_OFFSET = 0;
+    private static final double SCALE_OFFSET = 0.04;
+    private static final float TRANS_OFFSET = 45;
+    private float CURRENT_TRANSY_OFFSET = 0;
+    private float CURRENT_SCALEX_OFFSET = 0;
+    private float CURRENT_SCALEY_OFFSET = 0;
     private int MARGIN_OFFSET = 0;
-    private int MAX_VISIBLE = 4;
+    private int MAX_VISIBLE = 3;
     private int MIN_ADAPTER_STACK = 6;
     private float ROTATION_DEGREES = 15.f;
 
@@ -156,33 +156,48 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
         while (startingIndex < Math.min(adapterCount, MAX_VISIBLE) ) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
-                makeAndAddView(newUnderChild);
-                LAST_OBJECT_IN_STACK = startingIndex;
+                makeAndAddView(newUnderChild, false);
+//                LAST_OBJECT_IN_STACK = startingIndex;
             }
             startingIndex++;
         }
-        
+
+        /**
+         * This is to add a base view at end. To make an illusion that views come out from
+         * a base card. The scale and translation of this view is same as the one previous to
+         * this.
+         */
+        View newUnderChild = mAdapter.getView(startingIndex, null, this);
+        if (newUnderChild.getVisibility() != GONE) {
+            makeAndAddView(newUnderChild, true);
+            LAST_OBJECT_IN_STACK = startingIndex;
+        }
     }
 
     private void resetOffsets() {
         MARGIN_OFFSET = 0;
-        TRANSY_OFFSET = 0;
-        SCALEX_OFFSET = 0;
-        SCALEY_OFFSET = 0;
+        CURRENT_TRANSY_OFFSET = 0;
+        CURRENT_SCALEX_OFFSET = 0;
+        CURRENT_SCALEY_OFFSET = 0;
     }
 
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void makeAndAddView(View child) {
+    private void makeAndAddView(View child, boolean isBase) {
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
-        child.setScaleX(child.getScaleX() - SCALEX_OFFSET);
-        child.setScaleY(child.getScaleY() - SCALEY_OFFSET);
-//        child.setTranslationX(child.getScaleX() - SCALEX_OFFSET);
-        child.setY(child.getTranslationY() + TRANSY_OFFSET);
-        SCALEX_OFFSET += 0.04;
-        SCALEY_OFFSET += 0.04;
-        TRANSY_OFFSET += 45;
+        if(isBase){
+            child.setScaleX((float) (child.getScaleX() - (CURRENT_SCALEX_OFFSET - SCALE_OFFSET)));
+            child.setScaleY((float) (child.getScaleY() - (CURRENT_SCALEY_OFFSET - SCALE_OFFSET)));
+            child.setY(child.getTranslationY() + CURRENT_TRANSY_OFFSET - TRANS_OFFSET);
+        } else {
+            child.setScaleX(child.getScaleX() - CURRENT_SCALEX_OFFSET);
+            child.setScaleY(child.getScaleY() - CURRENT_SCALEY_OFFSET);
+            child.setY(child.getTranslationY() + CURRENT_TRANSY_OFFSET);
+        }
+        CURRENT_SCALEX_OFFSET += SCALE_OFFSET;
+        CURRENT_SCALEY_OFFSET += SCALE_OFFSET;
+        CURRENT_TRANSY_OFFSET += TRANS_OFFSET;
         addViewInLayout(child, 0, lp, true);
 
         final boolean needToMeasure = child.isLayoutRequested();
@@ -246,10 +261,10 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
 
     public void relayoutChild(View child, float scrollDis, int childcount){
         float absScrollDis = Math.abs(scrollDis);
-        child.setScaleX((float) (1 - 0.04 * (MAX_VISIBLE - childcount) + absScrollDis * 0.04));
-        child.setScaleY((float) (1 - 0.04 * (MAX_VISIBLE - childcount) + absScrollDis * 0.04));
+        child.setScaleX((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
+        child.setScaleY((float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET));
 //        child.setTranslationX((float) (child.getTranslationX() + scrollDis * 0.001));
-        child.setTranslationY(45 * (MAX_VISIBLE - childcount) - absScrollDis * 45);
+        child.setTranslationY(TRANS_OFFSET * (MAX_VISIBLE - childcount) - absScrollDis * TRANS_OFFSET);
     }
 
 
@@ -294,8 +309,8 @@ public class SwipeFlingAdapterView extends BaseFlingAdapterView {
                                 Log.i("Scroll Percentage ", scrollProgressPercent + "");
                                 mFlingListener.onScroll(scrollProgressPercent);
                                 int childCount = getChildCount() - 1;
-                                while (childCount > 0){
-                                    relayoutChild(getChildAt(childCount - 1), scrollProgressPercent, childCount);
+                                while (childCount > 1){
+                                    relayoutChild(getChildAt(childCount - 1), scrollProgressPercent, childCount - 1);
                                     childCount --;
                                 }
                             }
