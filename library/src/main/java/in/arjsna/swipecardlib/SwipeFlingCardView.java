@@ -30,7 +30,7 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
 
     private Adapter mAdapter;
     private int LAST_OBJECT_IN_STACK = 0;
-    private onFlingListener mFlingListener;
+    private OnCardFlingListener mFlingListener;
     private AdapterDataSetObserver mDataSetObserver;
     private boolean mInLayout = false;
     private View mActiveCard = null;
@@ -65,14 +65,14 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
     /**
      * A shortcut method to set both the listeners and the adapter.
      *
-     * @param context The activity context which extends onFlingListener, OnItemClickListener or both
+     * @param context The activity context which extends OnCardFlingListener, OnItemClickListener or both
      * @param mAdapter The adapter you have to set.
      */
     public void init(final Context context, Adapter mAdapter) {
-        if(context instanceof onFlingListener) {
-            mFlingListener = (onFlingListener) context;
+        if(context instanceof OnCardFlingListener) {
+            mFlingListener = (OnCardFlingListener) context;
         }else{
-            throw new RuntimeException("Activity does not implement SwipeFlingAdapterView.onFlingListener");
+            throw new RuntimeException("Activity does not implement SwipeFlingAdapterView.OnCardFlingListener");
         }
         if(context instanceof OnItemClickListener){
             mOnItemClickListener = (OnItemClickListener) context;
@@ -384,8 +384,8 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
         }
     }
 
-    public void setFlingListener(onFlingListener onFlingListener) {
-        this.mFlingListener = onFlingListener;
+    public void setFlingListener(OnCardFlingListener OnCardFlingListener) {
+        this.mFlingListener = OnCardFlingListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener){
@@ -419,7 +419,7 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
         void onItemClicked(int itemPosition, Object dataObject);
     }
 
-    public interface onFlingListener {
+    public interface OnCardFlingListener {
         void removeFirstObjectInAdapter();
         void onLeftCardExit(Object dataObject);
         void onRightCardExit(Object dataObject);
