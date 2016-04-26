@@ -1,34 +1,30 @@
 package in.arjsna.swipecardsample;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
+import android.app.Activity;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import in.arjsna.swipecardlib.SwipeFlingCardView;
+import in.arjsna.swipecardlib.SwipeFlingPageView;
 
-
-public class MyActivity extends Activity {
+public class PageSwipeActivity extends Activity {
 
     private ArrayList<Card> al;
     private CardsAdapter arrayAdapter;
-    private int i;
 
-    @InjectView(R.id.frame)
-    SwipeFlingCardView flingContainer;
+    @InjectView(R.id.page_swipe_view)
+    SwipeFlingPageView flingContainer;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my);
+        setContentView(R.layout.activity_page_swipe);
         ButterKnife.inject(this);
 
 
@@ -38,7 +34,7 @@ public class MyActivity extends Activity {
 
 
         flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingCardView.OnCardFlingListener() {
+        flingContainer.setFlingListener(new SwipeFlingPageView.OnPageFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -52,12 +48,12 @@ public class MyActivity extends Activity {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
-//                makeToast(MyActivity.this, "Left!");
+//                makeToast(CardSwipeActivity.this, "Left!");
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-//                makeToast(MyActivity.this, "Right!");
+//                makeToast(CardSwipeActivity.this, "Right!");
             }
 
             @Override
@@ -78,26 +74,26 @@ public class MyActivity extends Activity {
 
             @Override
             public void onTopCardExit(Object dataObject) {
-//                makeToast(MyActivity.this, "Top!");
+//                makeToast(CardSwipeActivity.this, "Top!");
             }
 
             @Override
             public void onBottomCardExit(Object dataObject) {
-//                makeToast(MyActivity.this, "Bottom!");
+//                makeToast(CardSwipeActivity.this, "Bottom!");
             }
         });
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingCardView.OnItemClickListener() {
+        flingContainer.setOnItemClickListener(new SwipeFlingPageView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(MyActivity.this, "Clicked!");
+//                makeToast(CardSwipeActivity.this, "Clicked!");
             }
         });
 
-    }
 
+    }
     private void getDummyData(ArrayList<Card> al) {
         Card card = new Card();
         card.name = "John";
@@ -145,37 +141,4 @@ public class MyActivity extends Activity {
         card11.imageId = R.drawable.faces11;
         al.add(card11);
     }
-
-    static void makeToast(Context ctx, String s){
-        Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
-    }
-
-
-    @OnClick(R.id.top)
-    public void top() {
-        /**
-         * Trigger the right event manually.
-         */
-        flingContainer.getTopCardListener().selectTop();
-    }
-
-    @OnClick(R.id.bottom)
-    public void bottom() {
-        flingContainer.getTopCardListener().selectBottom();
-    }
-//
-
-    @OnClick(R.id.left)
-    public void left() {
-        flingContainer.getTopCardListener().selectLeft();
-    }
-
-
-    @OnClick(R.id.right)
-    public void right() {
-        flingContainer.getTopCardListener().selectRight();
-    }
-
-
-
 }

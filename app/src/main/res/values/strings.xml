@@ -3,5 +3,7 @@
 
     <string name="app_name">Swipe cards</string>
     <string name="hello_world">Hello world</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_page_swipe">PageSwipeActivity</string>
 
 </resources>

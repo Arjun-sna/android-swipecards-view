@@ -3,6 +3,7 @@ package in.arjsna.swipecardlib;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.graphics.PointF;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -28,22 +29,23 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
     private int CURRENT_SCALE_VAL;
     private double SCALE_OFFSET = 0.04;
     private int TRANS_OFFSET = 45;
-    private SwipeFlingPageView.OnPageFlingListener mFlingListener;
+    private OnPageFlingListener mFlingListener;
     private OnItemClickListener mOnItemClickListener;
+    private AdapterDataSetObserver mDataSetObserver;
 
     public SwipeFlingPageView(Context context) {
         this(context, null);
     }
 
     public SwipeFlingPageView(Context context, AttributeSet attrs) {
-        this(context, attrs, R.styleable.SwipeFlingPageView_SwipeFlingStyle);
+        this(context, attrs, -1);
     }
 
     public SwipeFlingPageView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.SwipeFlingPageView, defStyle, 0);
 //        MAX_VISIBLE = a.getInt(R.styleable.SwipeFlingCardView_max_visible, MAX_VISIBLE);
-        MIN_ADAPTER_STACK = a.getInt(R.styleable.SwipeFlingCardView_min_adapter_stack, MIN_ADAPTER_STACK);
+        MIN_ADAPTER_STACK = a.getInt(R.styleable.SwipeFlingPageView_min_adapter_stack_page, MIN_ADAPTER_STACK);
         a.recycle();
     }
 
@@ -287,12 +289,22 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
 
     @Override
     public void setAdapter(Adapter adapter) {
+        if (mAdapter != null && mDataSetObserver != null) {
+            mAdapter.unregisterDataSetObserver(mDataSetObserver);
+            mDataSetObserver = null;
+        }
 
+        mAdapter = adapter;
+
+        if (mAdapter != null  && mDataSetObserver == null) {
+            mDataSetObserver = new AdapterDataSetObserver();
+            mAdapter.registerDataSetObserver(mDataSetObserver);
+        }
     }
 
     @Override
     public View getSelectedView() {
-        return null;
+        return mActiveCard;
     }
 
     public void setFlingListener(OnPageFlingListener OnCardFlingListener) {
@@ -312,5 +324,18 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
 
         void onTopCardExit(Object dataObject);
         void onBottomCardExit(Object dataObject);
+    }
+
+    private class AdapterDataSetObserver extends DataSetObserver {
+        @Override
+        public void onChanged() {
+            requestLayout();
+        }
+
+        @Override
+        public void onInvalidated() {
+            requestLayout();
+        }
+
     }
 }

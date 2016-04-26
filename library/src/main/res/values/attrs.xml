@@ -11,9 +11,10 @@
         <attr name="top_swipe_detect" format="boolean"/>
         <attr name="bottom_swipe_detect" format="boolean"/>
     </declare-styleable>
+
     <declare-styleable name="SwipeFlingPageView">
-        <attr name="SwipeFlingStyle" format="reference"/>
-        <attr name="min_adapter_stack" format="integer"/>
+        <attr name="SwipeFlingPageStyle" format="reference"/>
+        <attr name="min_adapter_stack_page" format="integer"/>
         <!--<attr name="max_visible" format="integer"/>-->
     </declare-styleable>
 

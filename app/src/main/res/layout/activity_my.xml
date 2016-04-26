@@ -14,7 +14,7 @@
         android:layout_weight="1"
         app:rotation_degrees="15.5"
         app:bottom_swipe_detect="false"
-        tools:context=".MyActivity" />
+        tools:context=".CardSwipeActivity" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
