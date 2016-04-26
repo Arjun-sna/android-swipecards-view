@@ -9,13 +9,12 @@ import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import in.arjsna.swipecardlib.SwipeFlingCardView;
 import in.arjsna.swipecardlib.SwipeFlingPageView;
 
 public class PageSwipeActivity extends Activity {
 
     private ArrayList<Card> al;
-    private CardsAdapter arrayAdapter;
+    private PageAdapter arrayAdapter;
 
     @InjectView(R.id.page_swipe_view)
     SwipeFlingPageView flingContainer;
@@ -30,7 +29,7 @@ public class PageSwipeActivity extends Activity {
 
         al = new ArrayList<>();
         getDummyData(al);
-        arrayAdapter = new CardsAdapter(this, al );
+        arrayAdapter = new PageAdapter(this, al );
 
 
         flingContainer.setAdapter(arrayAdapter);

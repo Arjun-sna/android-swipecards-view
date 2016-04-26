@@ -33,7 +33,7 @@ public class FlingPageListener implements View.OnTouchListener{
     private final int parentWidth;
     private final int parentHeight;
     private final FlingListener mFlingListener;
-    private int mActivePointerId;
+    private int mActivePointerId = INVALID_POINTER_ID;
     private float aDownTouchX;
     private float aDownTouchY;
     private float aPosX;
@@ -189,11 +189,11 @@ public class FlingPageListener implements View.OnTouchListener{
     private boolean resetCardViewOnStack() {
         if(movedBeyondTopBorder()){
             Log.i("Swipe ", "top");
-            onSelectedY(true, getExitPointX(-objectH), 100);
+            onSelectedY(true, 100);
             mFlingListener.onScroll(-1.0f);
         } else if(movedBeyondBottomBorder()){
             Log.i("Swipe ", "bottom");
-            onSelectedY(false, getExitPointX(parentHeight), 100);
+            onSelectedY(false, 100);
             mFlingListener.onScroll(1.0f);
         }
         else {
@@ -230,7 +230,7 @@ public class FlingPageListener implements View.OnTouchListener{
 //        return aPosY + halfHeight < topBorder();
     }
 
-    private void onSelectedY(final boolean isTop, float exitX, int duration) {
+    private void onSelectedY(final boolean isTop, int duration) {
         isAnimationRunning = true;
         float exitY;
         if (isTop) {
@@ -242,7 +242,6 @@ public class FlingPageListener implements View.OnTouchListener{
         this.frame.animate()
                 .setDuration(duration)
                 .setInterpolator(new AccelerateInterpolator())
-                .x(exitX)
                 .y(exitY)
                 .setListener(new AnimatorListenerAdapter() {
                     @Override

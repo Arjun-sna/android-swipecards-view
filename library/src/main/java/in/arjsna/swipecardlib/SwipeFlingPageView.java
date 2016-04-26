@@ -25,9 +25,9 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
     private View mActiveCard;
     private FlingPageListener flingPageListener;
     private PointF mLastTouchPoint;
-    private int CURRENT_TRANSY_VAL;
-    private int CURRENT_SCALE_VAL;
-    private double SCALE_OFFSET = 0.04;
+    private float CURRENT_TRANSY_VAL;
+    private float CURRENT_SCALE_VAL;
+    private double SCALE_OFFSET = 0.2;
     private int TRANS_OFFSET = 45;
     private OnPageFlingListener mFlingListener;
     private OnItemClickListener mOnItemClickListener;
@@ -101,25 +101,10 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
         while (startingIndex < MAX_VISIBLE) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
-                makeAndAddView(newUnderChild, false);
-//                LAST_OBJECT_IN_STACK = startingIndex;
+                makeAndAddView(newUnderChild);
+                LAST_OBJECT_IN_STACK = startingIndex;
             }
             startingIndex++;
-        }
-
-        /**
-         * This is to add a base view at end. To make an illusion that views come out from
-         * a base card. The scale and translation of this view is same as the one previous to
-         * this.
-         */
-        if(startingIndex >= adapterCount){
-            LAST_OBJECT_IN_STACK = --startingIndex;
-            return;
-        }
-        View newUnderChild = mAdapter.getView(startingIndex, null, this);
-        if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
-            makeAndAddView(newUnderChild, true);
-            LAST_OBJECT_IN_STACK = startingIndex;
         }
     }
 
@@ -129,20 +114,14 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private void makeAndAddView(View child, boolean isBase) {
+    private void makeAndAddView(View child) {
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
-        if(isBase){
-            child.setScaleX((float) (child.getScaleX() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
-            child.setScaleY((float) (child.getScaleY() - (CURRENT_SCALE_VAL - SCALE_OFFSET)));
-            child.setY(child.getTranslationY() + CURRENT_TRANSY_VAL - TRANS_OFFSET);
-        } else {
-            child.setScaleX(child.getScaleX() - CURRENT_SCALE_VAL);
-            child.setScaleY(child.getScaleY() - CURRENT_SCALE_VAL);
-            child.setY(child.getTranslationY() + CURRENT_TRANSY_VAL);
-        }
+        child.setScaleX(child.getScaleX() - CURRENT_SCALE_VAL);
+        child.setScaleY(child.getScaleY() - CURRENT_SCALE_VAL);
+//        child.setY(child.getTranslationY() + CURRENT_TRANSY_VAL);
         CURRENT_SCALE_VAL += SCALE_OFFSET;
-        CURRENT_TRANSY_VAL += TRANS_OFFSET;
+//        CURRENT_TRANSY_VAL += TRANS_OFFSET;
         addViewInLayout(child, 0, lp, true);
 
         final boolean needToMeasure = child.isLayoutRequested();
@@ -275,7 +254,7 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
         float newScale = (float) (1 - SCALE_OFFSET * (MAX_VISIBLE - childcount) + absScrollDis * SCALE_OFFSET);
         child.setScaleX(newScale);
         child.setScaleY(newScale);
-        child.setTranslationY(TRANS_OFFSET * (MAX_VISIBLE - childcount) - absScrollDis * TRANS_OFFSET);
+//        child.setTranslationY(TRANS_OFFSET * (MAX_VISIBLE - childcount) - absScrollDis * TRANS_OFFSET);
     }
 
     public interface OnItemClickListener {
@@ -337,5 +316,10 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
             requestLayout();
         }
 
+    }
+
+    @Override
+    public LayoutParams generateLayoutParams(AttributeSet attrs) {
+        return new FrameLayout.LayoutParams(getContext(), attrs);
     }
 }
