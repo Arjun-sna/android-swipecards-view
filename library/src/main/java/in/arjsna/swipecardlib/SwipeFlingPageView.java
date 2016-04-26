@@ -32,6 +32,7 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
     private OnPageFlingListener mFlingListener;
     private OnItemClickListener mOnItemClickListener;
     private AdapterDataSetObserver mDataSetObserver;
+    private int START_STACK_FROM = 0;
 
     public SwipeFlingPageView(Context context) {
         this(context, null);
@@ -83,7 +84,7 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
             }else{
                 // Reset the UI and set top view listener
                 removeAllViewsInLayout();
-                layoutChildren(0, adapterCount);
+                layoutChildren(START_STACK_FROM, adapterCount);
                 setTopView();
             }
         }
@@ -98,13 +99,14 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
         if(adapterCount < MAX_VISIBLE){
             MAX_VISIBLE = adapterCount;
         }
-        while (startingIndex < MAX_VISIBLE) {
+        int viewStack = 0;
+        while (startingIndex < START_STACK_FROM + MAX_VISIBLE && startingIndex < adapterCount) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
                 makeAndAddView(newUnderChild);
-                LAST_OBJECT_IN_STACK = startingIndex;
+                LAST_OBJECT_IN_STACK = viewStack;
             }
-            startingIndex++;
+            startingIndex++;viewStack++;
         }
     }
 
@@ -195,7 +197,9 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
                             @Override
                             public void onCardExited() {
                                 mActiveCard = null;
-                                mFlingListener.removeFirstObjectInAdapter();
+                                START_STACK_FROM++;
+                                requestLayout();
+//                                mFlingListener.removeFirstObjectInAdapter();
                             }
 
                             @Override
@@ -295,7 +299,7 @@ public class SwipeFlingPageView extends BaseFlingAdapterView {
     }
 
     public interface OnPageFlingListener {
-        void removeFirstObjectInAdapter();
+//        void removeFirstObjectInAdapter();
         void onLeftCardExit(Object dataObject);
         void onRightCardExit(Object dataObject);
         void onAdapterAboutToEmpty(int itemsInAdapter);

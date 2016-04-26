@@ -34,13 +34,13 @@ public class PageSwipeActivity extends Activity {
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingPageView.OnPageFlingListener() {
-            @Override
-            public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                al.remove(0);
-                arrayAdapter.notifyDataSetChanged();
-            }
+//            @Override
+//            public void removeFirstObjectInAdapter() {
+//                // this is the simplest way to delete an object from the Adapter (/AdapterView)
+//                Log.d("LIST", "removed object!");
+////                al.remove(0);
+////                arrayAdapter.notifyDataSetChanged();
+//            }
 
             @Override
             public void onLeftCardExit(Object dataObject) {
