@@ -37,6 +37,7 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
     private OnItemClickListener mOnItemClickListener;
     private FlingCardListener flingCardListener;
     private PointF mLastTouchPoint;
+    private int START_STACK_FROM = 0;
 
 
     public SwipeFlingCardView(Context context) {
@@ -146,7 +147,7 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
             }else{
                 // Reset the UI and set top view listener
                 removeAllViewsInLayout();
-                layoutChildren(0, adapterCount);
+                layoutChildren(START_STACK_FROM, adapterCount);
                 setTopView();
             }
         }
@@ -159,16 +160,16 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
 
     private void layoutChildren(int startingIndex, int adapterCount){
         resetOffsets();
-        if(adapterCount < MAX_VISIBLE){
-            MAX_VISIBLE = adapterCount;
+        if(adapterCount - startingIndex < MAX_VISIBLE){
+            MAX_VISIBLE = adapterCount - startingIndex;
         }
-        while (startingIndex < MAX_VISIBLE) {
+        int viewStack = 0;
+        while (startingIndex < START_STACK_FROM + MAX_VISIBLE && startingIndex < adapterCount) {
             View newUnderChild = mAdapter.getView(startingIndex, null, this);
             if (newUnderChild.getVisibility() != GONE) {
                 makeAndAddView(newUnderChild, false);
-//                LAST_OBJECT_IN_STACK = startingIndex;
             }
-            startingIndex++;
+            startingIndex++;viewStack++;
         }
 
         /**
@@ -177,13 +178,13 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
          * this.
          */
         if(startingIndex >= adapterCount){
-            LAST_OBJECT_IN_STACK = --startingIndex;
+            LAST_OBJECT_IN_STACK = --viewStack;
             return;
         }
         View newUnderChild = mAdapter.getView(startingIndex, null, this);
         if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
             makeAndAddView(newUnderChild, true);
-            LAST_OBJECT_IN_STACK = startingIndex;
+            LAST_OBJECT_IN_STACK = viewStack;
         }
     }
 
@@ -288,13 +289,15 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
             mActiveCard = getChildAt(LAST_OBJECT_IN_STACK);
             if(mActiveCard!=null) {
 
-                flingCardListener = new FlingCardListener(this, mActiveCard, mAdapter.getItem(0),
+                flingCardListener = new FlingCardListener(this, mActiveCard, mAdapter.getItem(START_STACK_FROM),
                         ROTATION_DEGREES, new FlingCardListener.FlingListener() {
 
                             @Override
                             public void onCardExited() {
                                 mActiveCard = null;
-                                mFlingListener.removeFirstObjectInAdapter();
+                                START_STACK_FROM++;
+                                requestLayout();
+//                                mFlingListener.removeFirstObjectInAdapter();
                             }
 
                             @Override
@@ -420,7 +423,7 @@ public class SwipeFlingCardView extends BaseFlingAdapterView {
     }
 
     public interface OnCardFlingListener {
-        void removeFirstObjectInAdapter();
+//        void removeFirstObjectInAdapter();
         void onLeftCardExit(Object dataObject);
         void onRightCardExit(Object dataObject);
         void onAdapterAboutToEmpty(int itemsInAdapter);

@@ -40,14 +40,6 @@ public class CardSwipeActivity extends Activity {
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingCardView.OnCardFlingListener() {
             @Override
-            public void removeFirstObjectInAdapter() {
-                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-                Log.d("LIST", "removed object!");
-                al.remove(0);
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
             public void onLeftCardExit(Object dataObject) {
                 //Do something on the left!
                 //You also have access to the original object.
@@ -83,16 +75,18 @@ public class CardSwipeActivity extends Activity {
 
             @Override
             public void onBottomCardExit(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Bottom!");
+
             }
         });
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingCardView.OnItemClickListener() {
+        flingContainer.setOnItemClickListener(
+                new SwipeFlingCardView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-                makeToast(CardSwipeActivity.this, "Clicked!");
+                Card card = (Card) dataObject;
+                makeToast(CardSwipeActivity.this, card.name);
             }
         });
 
