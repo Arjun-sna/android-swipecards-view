@@ -7,8 +7,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    <in.arjsna.swipecardlib.SwipeFlingCardView
-        android:id="@+id/frame"
+    <in.arjsna.swipecardlib.SwipeCardView
+        android:id="@+id/card_stack_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

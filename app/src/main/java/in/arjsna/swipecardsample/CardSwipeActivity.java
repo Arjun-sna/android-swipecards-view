@@ -3,7 +3,6 @@ package in.arjsna.swipecardsample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import in.arjsna.swipecardlib.SwipeFlingCardView;
+import in.arjsna.swipecardlib.SwipeCardView;
 
 
 public class CardSwipeActivity extends Activity {
@@ -21,8 +20,8 @@ public class CardSwipeActivity extends Activity {
     private CardsAdapter arrayAdapter;
     private int i;
 
-    @InjectView(R.id.frame)
-    SwipeFlingCardView flingContainer;
+    @InjectView(R.id.card_stack_view)
+    SwipeCardView swipeCardView;
 
 
     @Override
@@ -37,10 +36,10 @@ public class CardSwipeActivity extends Activity {
         arrayAdapter = new CardsAdapter(this, al );
 
 
-        flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingCardView.OnCardFlingListener() {
+        swipeCardView.setAdapter(arrayAdapter);
+        swipeCardView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
             @Override
-            public void onLeftCardExit(Object dataObject) {
+            public void onCardExitLeft(Object dataObject) {
                 //Do something on the left!
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
@@ -48,7 +47,7 @@ public class CardSwipeActivity extends Activity {
             }
 
             @Override
-            public void onRightCardExit(Object dataObject) {
+            public void onCardExitRight(Object dataObject) {
 //                makeToast(CardSwipeActivity.this, "Right!");
             }
 
@@ -63,32 +62,32 @@ public class CardSwipeActivity extends Activity {
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
+                View view = swipeCardView.getSelectedView();
 //                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
 //                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
 
             @Override
-            public void onTopCardExit(Object dataObject) {
+            public void onCardExitTop(Object dataObject) {
 //                makeToast(CardSwipeActivity.this, "Top!");
             }
 
             @Override
-            public void onBottomCardExit(Object dataObject) {
+            public void onCardExitBottom(Object dataObject) {
 
             }
         });
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(
-                new SwipeFlingCardView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Card card = (Card) dataObject;
-                makeToast(CardSwipeActivity.this, card.name);
-            }
-        });
+        swipeCardView.setOnItemClickListener(
+                new SwipeCardView.OnItemClickListener() {
+                    @Override
+                    public void onItemClicked(int itemPosition, Object dataObject) {
+                        Card card = (Card) dataObject;
+                        makeToast(CardSwipeActivity.this, card.name);
+                    }
+                });
 
     }
 
@@ -150,26 +149,24 @@ public class CardSwipeActivity extends Activity {
         /**
          * Trigger the right event manually.
          */
-        flingContainer.getTopCardListener().selectTop();
+        swipeCardView.throwTop();
     }
 
     @OnClick(R.id.bottom)
     public void bottom() {
-        flingContainer.getTopCardListener().selectBottom();
+        swipeCardView.throwBottom();
     }
 //
 
     @OnClick(R.id.left)
     public void left() {
-        flingContainer.getTopCardListener().selectLeft();
+        swipeCardView.throwLeft();
     }
 
 
     @OnClick(R.id.right)
     public void right() {
-        flingContainer.getTopCardListener().selectRight();
+        swipeCardView.throwRight();
     }
-
-
 
 }

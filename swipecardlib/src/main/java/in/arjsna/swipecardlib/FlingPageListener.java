@@ -275,10 +275,6 @@ public class FlingPageListener implements View.OnTouchListener{
     protected interface FlingListener {
         void onCardExited();
 
-        void leftExit(Object dataObject);
-
-        void rightExit(Object dataObject);
-
         void onClick(Object dataObject);
 
         void onScroll(float scrollProgressPercent);

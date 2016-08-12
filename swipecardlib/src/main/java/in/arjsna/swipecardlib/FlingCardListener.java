@@ -16,7 +16,7 @@ public class FlingCardListener implements View.OnTouchListener {
 
     private static final String TAG = FlingCardListener.class.getSimpleName();
     private static final int INVALID_POINTER_ID = -1;
-    private final SwipeFlingCardView parentView;
+    private final SwipeCardView parentView;
     private Rect RECT_TOP;
     private Rect RECT_BOTTOM;
     private Rect RECT_LEFT;
@@ -52,11 +52,11 @@ public class FlingCardListener implements View.OnTouchListener {
     private float MAX_COS = (float) Math.cos(Math.toRadians(45));
 
 
-    public FlingCardListener(SwipeFlingCardView parent, View frame, Object itemAtPosition, FlingListener flingListener) {
+    public FlingCardListener(SwipeCardView parent, View frame, Object itemAtPosition, FlingListener flingListener) {
         this(parent, frame, itemAtPosition, 15f, flingListener);
     }
 
-    public FlingCardListener(SwipeFlingCardView parent, View frame, Object itemAtPosition, float rotation_degrees, FlingListener flingListener) {
+    public FlingCardListener(SwipeCardView parent, View frame, Object itemAtPosition, float rotation_degrees, FlingListener flingListener) {
         super();
         this.parentView = parent;
         this.frame = frame;
@@ -329,17 +329,11 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
 
-    /**
-     * Starts a default left exit animation.
-     */
     public void selectLeft() {
         if (!isAnimationRunning)
             onSelectedX(true, objectY, 200);
     }
 
-    /**
-     * Starts a default right exit animation.
-     */
     public void selectRight() {
         if (!isAnimationRunning)
             onSelectedX(false, objectY, 200);

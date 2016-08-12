@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="SwipeFlingCardView">
+    <declare-styleable name="SwipeCardView">
         <attr name="SwipeFlingStyle" format="reference"/>
         <attr name="rotation_degrees" format="float"/>
         <attr name="min_adapter_stack" format="integer"/>
@@ -12,7 +12,7 @@
         <attr name="bottom_swipe_detect" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="SwipeFlingPageView">
+    <declare-styleable name="SwipePageView">
         <attr name="SwipeFlingPageStyle" format="reference"/>
         <attr name="min_adapter_stack_page" format="integer"/>
         <!--<attr name="max_visible" format="integer"/>-->

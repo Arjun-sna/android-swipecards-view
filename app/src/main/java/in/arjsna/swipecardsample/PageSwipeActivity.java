@@ -2,14 +2,13 @@ package in.arjsna.swipecardsample;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import in.arjsna.swipecardlib.SwipeFlingPageView;
+import in.arjsna.swipecardlib.SwipePageView;
 
 public class PageSwipeActivity extends Activity {
 
@@ -17,7 +16,7 @@ public class PageSwipeActivity extends Activity {
     private PageAdapter arrayAdapter;
 
     @InjectView(R.id.page_swipe_view)
-    SwipeFlingPageView flingContainer;
+    SwipePageView flingContainer;
 
 
     @Override
@@ -33,7 +32,7 @@ public class PageSwipeActivity extends Activity {
 
 
         flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingPageView.OnPageFlingListener() {
+        flingContainer.setFlingListener(new SwipePageView.OnPageFlingListener() {
 //            @Override
 //            public void removeFirstObjectInAdapter() {
 //                // this is the simplest way to delete an object from the Adapter (/AdapterView)
@@ -84,7 +83,7 @@ public class PageSwipeActivity extends Activity {
 
 
         // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingPageView.OnItemClickListener() {
+        flingContainer.setOnItemClickListener(new SwipePageView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
 //                makeToast(CardSwipeActivity.this, "Clicked!");
