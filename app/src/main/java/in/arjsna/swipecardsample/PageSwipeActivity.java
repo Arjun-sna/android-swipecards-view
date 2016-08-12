@@ -1,8 +1,7 @@
 package in.arjsna.swipecardsample;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.View;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -33,60 +32,25 @@ public class PageSwipeActivity extends Activity {
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipePageView.OnPageFlingListener() {
-//            @Override
-//            public void removeFirstObjectInAdapter() {
-//                // this is the simplest way to delete an object from the Adapter (/AdapterView)
-//                Log.d("LIST", "removed object!");
-////                al.remove(0);
-////                arrayAdapter.notifyDataSetChanged();
-//            }
-
-            @Override
-            public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-//                makeToast(CardSwipeActivity.this, "Left!");
-            }
-
-            @Override
-            public void onRightCardExit(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Right!");
-            }
-
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-//                al.add("XML ".concat(String.valueOf(i)));
-//                arrayAdapter.notifyDataSetChanged();
-//                Log.d("LIST", "notified");
-//                i++;
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = flingContainer.getSelectedView();
-//                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-//                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
 
             @Override
             public void onTopCardExit(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Top!");
             }
 
             @Override
             public void onBottomCardExit(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Bottom!");
             }
         });
-
-
-        // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipePageView.OnItemClickListener() {
             @Override
             public void onItemClicked(int itemPosition, Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Clicked!");
             }
         });
 
