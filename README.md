@@ -1,10 +1,19 @@
-# SwipeCardsView
+# SwipeCardsView [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeCardsView-green.svg?style=true)](https://android-arsenal.com/details/1/4141) [ ![Download](https://api.bintray.com/packages/arjun-sna/maven/swipecardview/images/download.svg) ](https://bintray.com/arjun-sna/maven/swipecardview/_latestVersion)
 Android library for implementing cards stack view with swipe to remove feature
 
 ##Demo
 <img src="https://rawgit.com/Arjun-sna/Arjun-sna.github.io/master/raw/swipecarddemo.gif" width="250" />
 
 ##Installation
+```
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'in.arjsna:swipecardlib:1.0.0'
+}
+```
 
 ##Usage
 Add `SwipeCardView` to the layout xml file where it is needed

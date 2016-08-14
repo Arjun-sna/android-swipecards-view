@@ -22,7 +22,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile project(':swipecardlib')
+//    compile project(':swipecardlib')
+    compile 'in.arjsna:swipecardlib:1.0.0'
     compile 'com.jakewharton:butterknife:5.1.2'
     compile 'com.android.support:cardview-v7:23.0.1'
 }
