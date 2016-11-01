@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Swipecards.iml" filepath="$PROJECT_DIR$/Swipecards.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-swipecards-view.iml" filepath="$PROJECT_DIR$/android-swipecards-view.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/swipecardlib/swipecardlib.iml" filepath="$PROJECT_DIR$/swipecardlib/swipecardlib.iml" />
     </modules>
