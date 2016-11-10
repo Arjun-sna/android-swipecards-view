@@ -12,7 +12,7 @@ ext {
     siteUrl = 'https://github.com/Arjun-sna/android-swipecards-view'
     gitUrl = 'https://github.com/Arjun-sna/android-swipecards-view.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.2'
 
     developerId = 'Arjun-Sna'
     developerName = 'Arjun'
