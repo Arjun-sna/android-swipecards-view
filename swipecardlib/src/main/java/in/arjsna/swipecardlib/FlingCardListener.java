@@ -15,40 +15,62 @@ import android.view.animation.OvershootInterpolator;
 public class FlingCardListener implements View.OnTouchListener {
 
     private static final String TAG = FlingCardListener.class.getSimpleName();
+
     private static final int INVALID_POINTER_ID = -1;
+
     private final SwipeCardView parentView;
+
     private Rect RECT_TOP;
+
     private Rect RECT_BOTTOM;
+
     private Rect RECT_LEFT;
+
     private Rect RECT_RIGHT;
 
     private final float objectX;
+
     private final float objectY;
+
     private final int objectH;
+
     private final int objectW;
+
     private final int parentWidth;
+
     private final FlingListener mFlingListener;
+
     private final Object dataObject;
+
     private final float halfWidth;
+
     private final float halfHeight;
+
     private final int parentHeight;
+
     private float BASE_ROTATION_DEGREES;
 
     private float aPosX;
+
     private float aPosY;
+
     private float aDownTouchX;
+
     private float aDownTouchY;
 
     // The active pointer is the one currently moving our object.
     private int mActivePointerId = INVALID_POINTER_ID;
+
     private View frame = null;
 
-
     private final int TOUCH_ABOVE = 0;
+
     private final int TOUCH_BELOW = 1;
+
     private int touchPosition;
-    private final Object obj = new Object();
+
     private boolean isAnimationRunning = false;
+
     private float MAX_COS = (float) Math.cos(Math.toRadians(45));
 
 
@@ -79,10 +101,8 @@ public class FlingCardListener implements View.OnTouchListener {
 
 
     public boolean onTouch(View view, MotionEvent event) {
-
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             case MotionEvent.ACTION_DOWN:
-
                 mActivePointerId = event.getPointerId(0);
                 float x = 0;
                 float y = 0;
@@ -113,7 +133,6 @@ public class FlingCardListener implements View.OnTouchListener {
                         touchPosition = TOUCH_BELOW;
                     }
                 }
-
                 view.getParent().requestDisallowInterceptTouchEvent(true);
                 break;
 
@@ -137,8 +156,8 @@ public class FlingCardListener implements View.OnTouchListener {
                     mActivePointerId = event.getPointerId(newPointerIndex);
                 }
                 break;
-            case MotionEvent.ACTION_MOVE:
 
+            case MotionEvent.ACTION_MOVE:
                 final int pointerIndexMove = event.findPointerIndex(mActivePointerId);
                 final float xMove = event.getX(pointerIndexMove);
                 final float yMove = event.getY(pointerIndexMove);
@@ -168,7 +187,6 @@ public class FlingCardListener implements View.OnTouchListener {
                 break;
             }
         }
-
         return true;
     }
 
@@ -186,20 +204,16 @@ public class FlingCardListener implements View.OnTouchListener {
     private boolean resetCardViewOnStack() {
         if (movedBeyondLeftBorder() && parentView.DETECT_LEFT_SWIPE) {
             // Left Swipe
-            Log.i("Swipe ", "left");
             onSelectedX(true, getExitPoint(-objectW), 100);
             mFlingListener.onScroll(-1.0f);
         } else if (movedBeyondRightBorder() && parentView.DETECT_RIGHT_SWIPE) {
             // Right Swipe
-            Log.i("Swipe ", "right");
             onSelectedX(false, getExitPoint(parentWidth), 100);
             mFlingListener.onScroll(1.0f);
         } else if(movedBeyondTopBorder() && parentView.DETECT_TOP_SWIPE){
-            Log.i("Swipe ", "top");
             onSelectedY(true, getExitPointX(-objectH), 100);
             mFlingListener.onScroll(-1.0f);
         } else if(movedBeyondBottomBorder() && parentView.DETECT_BOTTOM_SWIPE){
-            Log.i("Swipe ", "bottom");
             onSelectedY(false, getExitPointX(parentHeight), 100);
             mFlingListener.onScroll(1.0f);
         }
@@ -234,36 +248,33 @@ public class FlingCardListener implements View.OnTouchListener {
         int centerX = (int) (frame.getX() + halfWidth);
         int centerY = (int) (frame.getY() + halfHeight);
         return (RECT_RIGHT.contains(centerX, centerY) || (centerX > RECT_RIGHT.right && RECT_RIGHT.contains(RECT_RIGHT.left, centerY)));
-//        return aPosX + halfWidth > rightBorder();
     }
 
     private boolean movedBeyondBottomBorder() {
         int centerX = (int) (frame.getX() + halfWidth);
         int centerY = (int) (frame.getY() + halfHeight);
         return (RECT_BOTTOM.contains(centerX, centerY) || (centerY > RECT_BOTTOM.bottom && RECT_BOTTOM.contains(centerX, RECT_BOTTOM.top)));
-//        return aPosY + halfHeight > bottomBorder();
     }
 
     private boolean movedBeyondTopBorder() {
         int centerX = (int) (frame.getX() + halfWidth);
         int centerY = (int) (frame.getY() + halfHeight);
         return (RECT_TOP.contains(centerX, centerY) || (centerY < RECT_TOP.top && RECT_TOP.contains(centerX, 0)));
-//        return aPosY + halfHeight < topBorder();
     }
 
-    public float leftBorder() {
+    private float leftBorder() {
         return parentWidth / 4.f;
     }
 
-    public float rightBorder() {
+    private float rightBorder() {
         return 3 * parentWidth / 4.f;
     }
 
-    public float bottomBorder() {
+    private float bottomBorder() {
         return 3 * parentHeight / 4.f;
     }
 
-    public float topBorder() {
+    private float topBorder() {
         return parentHeight  / 4.f;
     }
 
@@ -294,11 +305,11 @@ public class FlingCardListener implements View.OnTouchListener {
                         isAnimationRunning = false;
                     }
                 })
-                .rotation(getExitRotation(isTop));
+                .rotation(getVerticalExitRotation(isTop));
     }
-    public void onSelectedX(final boolean isLeft,
-                            float exitY, long duration) {
 
+    private void onSelectedX(final boolean isLeft,
+                             float exitY, long duration) {
         isAnimationRunning = true;
         float exitX;
         if (isLeft) {
@@ -325,26 +336,25 @@ public class FlingCardListener implements View.OnTouchListener {
                         isAnimationRunning = false;
                     }
                 })
-                .rotation(getExitRotation(isLeft));
+                .rotation(getHorizontalExitRotation(isLeft));
     }
 
-
-    public void selectLeft() {
+    void selectLeft() {
         if (!isAnimationRunning)
             onSelectedX(true, objectY, 200);
     }
 
-    public void selectRight() {
+    void selectRight() {
         if (!isAnimationRunning)
             onSelectedX(false, objectY, 200);
     }
 
-    public void selectTop() {
+    void selectTop() {
         if (!isAnimationRunning)
             onSelectedY(true, objectX, 200);
     }
 
-    public void selectBottom() {
+    void selectBottom() {
         if (!isAnimationRunning)
             onSelectedY(false, objectX, 200);
     }
@@ -380,7 +390,7 @@ public class FlingCardListener implements View.OnTouchListener {
         return (float) ((exitYPoint - (float) regression.intercept()) / regression.slope());
     }
 
-    private float getExitRotation(boolean isLeft) {
+    private float getHorizontalExitRotation(boolean isLeft) {
         float rotation = BASE_ROTATION_DEGREES * 2.f * (parentWidth - objectX) / parentWidth;
         if (touchPosition == TOUCH_BELOW) {
             rotation = -rotation;
@@ -391,6 +401,16 @@ public class FlingCardListener implements View.OnTouchListener {
         return rotation;
     }
 
+    private float getVerticalExitRotation(boolean isTop) {
+        float rotation = BASE_ROTATION_DEGREES * 2.f * (parentHeight - objectY) / parentHeight;
+        if (touchPosition == TOUCH_BELOW) {
+            rotation = -rotation;
+        }
+        if (isTop) {
+            rotation = -rotation;
+        }
+        return rotation;
+    }
 
     /**
      * When the object rotates it's width becomes bigger.
@@ -407,15 +427,15 @@ public class FlingCardListener implements View.OnTouchListener {
         this.BASE_ROTATION_DEGREES = degrees;
     }
 
-    public boolean isTouching() {
+    boolean isTouching() {
         return this.mActivePointerId != INVALID_POINTER_ID;
     }
 
-    public PointF getLastPoint() {
+    PointF getLastPoint() {
         return new PointF(this.aPosX, this.aPosY);
     }
 
-    protected interface FlingListener {
+    interface FlingListener {
         void onCardExited();
 
         void leftExit(Object dataObject);

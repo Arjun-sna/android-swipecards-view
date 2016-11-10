@@ -3,6 +3,7 @@ package in.arjsna.swipecardsample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -40,41 +41,33 @@ public class CardSwipeActivity extends Activity {
         swipeCardView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
             @Override
             public void onCardExitLeft(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-//                makeToast(CardSwipeActivity.this, "Left!");
+                makeToast(CardSwipeActivity.this, "Left!");
             }
 
             @Override
             public void onCardExitRight(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Right!");
+                makeToast(CardSwipeActivity.this, "Right!");
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
-                // Ask for more data here
-//                al.add("XML ".concat(String.valueOf(i)));
-//                arrayAdapter.notifyDataSetChanged();
-//                Log.d("LIST", "notified");
-//                i++;
+                getDummyData(al);
+                arrayAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
-                View view = swipeCardView.getSelectedView();
-//                view.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-//                view.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+
             }
 
             @Override
             public void onCardExitTop(Object dataObject) {
-//                makeToast(CardSwipeActivity.this, "Top!");
+                makeToast(CardSwipeActivity.this, "Top!");
             }
 
             @Override
             public void onCardExitBottom(Object dataObject) {
-
+                makeToast(CardSwipeActivity.this, "Bottom!");
             }
         });
 
@@ -156,7 +149,6 @@ public class CardSwipeActivity extends Activity {
     public void bottom() {
         swipeCardView.throwBottom();
     }
-//
 
     @OnClick(R.id.left)
     public void left() {
