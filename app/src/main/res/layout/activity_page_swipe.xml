@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="in.arjsna.swipecardsample.PageSwipeActivity">
-    <in.arjsna.swipecardlib.SwipePageView
-        android:id="@+id/page_swipe_view"
-        android:background="@color/grey"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    tools:context="in.arjsna.swipecardsample.PageSwipeActivity"
+    >
+  <in.arjsna.swipecardlib.SwipePageView
+      android:id="@+id/page_swipe_view"
+      android:background="@color/grey"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      />
 </LinearLayout>

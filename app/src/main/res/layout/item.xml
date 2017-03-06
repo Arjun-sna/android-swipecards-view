@@ -7,62 +7,68 @@
     android:layout_gravity="top"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
-    <android.support.v7.widget.CardView
+  <android.support.v7.widget.CardView
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      card_view:cardElevation="0.0dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      >
+    <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        card_view:cardElevation="0.0dp"
+        android:layout_gravity="center"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:layout_gravity="center"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/card_image"
-                android:scaleType="centerCrop"
-                android:layout_width="match_parent"
-                android:layout_height="350.0dp"
-                android:src="@drawable/androidapple"/>
-            <TextView
-                android:id="@+id/helloText"
-                android:textSize="16.0sp"
-                android:textColor="@android:color/black"
-                tools:text="@string/hello_world"
-                android:padding="15.0dp"
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <!--<View-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="2.0dp"-->
-                <!--android:background="@drawable/shadow"/>-->
-        </LinearLayout>
-
-        <!--<View-->
-            <!--android:id="@+id/item_swipe_left_indicator"-->
-            <!--android:alpha="0"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:background="#A5F" />-->
-
-        <!--<View-->
-            <!--android:id="@+id/item_swipe_right_indicator"-->
-            <!--android:alpha="0"-->
-            <!--android:layout_width="20dp"-->
-            <!--android:layout_height="20dp"-->
-            <!--android:layout_margin="10dp"-->
-            <!--android:layout_gravity="right"-->
-            <!--android:background="#5AF" />-->
-
-    </android.support.v7.widget.CardView>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2.0dp"
-        android:background="@drawable/shadow"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+      <ImageView
+          android:id="@+id/card_image"
+          android:scaleType="centerCrop"
+          android:layout_width="match_parent"
+          android:layout_height="350.0dp"
+          android:src="@drawable/androidapple"
+          />
+      <TextView
+          android:id="@+id/helloText"
+          android:textSize="16.0sp"
+          android:textColor="@android:color/black"
+          tools:text="@string/hello_world"
+          android:padding="15.0dp"
+          android:background="@android:color/white"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          />
+      <!--<View-->
+      <!--android:layout_width="match_parent"-->
+      <!--android:layout_height="2.0dp"-->
+      <!--android:background="@drawable/shadow"/>-->
     </LinearLayout>
+
+    <!--<View-->
+    <!--android:id="@+id/item_swipe_left_indicator"-->
+    <!--android:alpha="0"-->
+    <!--android:layout_width="20dp"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:background="#A5F" />-->
+
+    <!--<View-->
+    <!--android:id="@+id/item_swipe_right_indicator"-->
+    <!--android:alpha="0"-->
+    <!--android:layout_width="20dp"-->
+    <!--android:layout_height="20dp"-->
+    <!--android:layout_margin="10dp"-->
+    <!--android:layout_gravity="right"-->
+    <!--android:background="#5AF" />-->
+
+  </android.support.v7.widget.CardView>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="2.0dp"
+      android:background="@drawable/shadow"
+      />
+</LinearLayout>

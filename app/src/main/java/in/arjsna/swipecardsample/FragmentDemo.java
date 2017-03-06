@@ -1,40 +1,45 @@
 package in.arjsna.swipecardsample;
 
-import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.widget.Toast;
-import butterknife.ButterKnife;
-import butterknife.InjectView;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import butterknife.OnClick;
 import in.arjsna.swipecardlib.SwipeCardView;
 import java.util.ArrayList;
 
-public class CardSwipeActivity extends AppCompatActivity {
+import static in.arjsna.swipecardsample.CardSwipeActivity.makeToast;
+
+/**
+ * Created by arjun on 6/3/17.
+ */
+public class FragmentDemo extends Fragment {
+  private View mRootView;
 
   private ArrayList<Card> al;
   private CardsAdapter arrayAdapter;
   private int i;
 
-  @InjectView(R.id.card_stack_view) SwipeCardView swipeCardView;
+  SwipeCardView swipeCardView;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_my);
-    ButterKnife.inject(this);
-
+  @Nullable @Override
+  public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+      @Nullable Bundle savedInstanceState) {
+    mRootView = inflater.inflate(R.layout.fragment_demo, container, false);
+    swipeCardView = (SwipeCardView) mRootView.findViewById(R.id.card_stack_view);
     al = new ArrayList<>();
     getDummyData(al);
-    arrayAdapter = new CardsAdapter(this, al);
-
+    arrayAdapter = new CardsAdapter(getActivity(), al);
     swipeCardView.setAdapter(arrayAdapter);
     swipeCardView.setFlingListener(new SwipeCardView.OnCardFlingListener() {
       @Override public void onCardExitLeft(Object dataObject) {
-        makeToast(CardSwipeActivity.this, "Left!");
+        makeToast(getActivity(), "Left!");
       }
 
       @Override public void onCardExitRight(Object dataObject) {
-        makeToast(CardSwipeActivity.this, "Right!");
+        makeToast(getActivity(), "Right!");
       }
 
       @Override public void onAdapterAboutToEmpty(int itemsInAdapter) {
@@ -47,11 +52,11 @@ public class CardSwipeActivity extends AppCompatActivity {
       }
 
       @Override public void onCardExitTop(Object dataObject) {
-        makeToast(CardSwipeActivity.this, "Top!");
+        makeToast(getActivity(), "Top!");
       }
 
       @Override public void onCardExitBottom(Object dataObject) {
-        makeToast(CardSwipeActivity.this, "Bottom!");
+        makeToast(getActivity(), "Bottom!");
       }
     });
 
@@ -59,9 +64,10 @@ public class CardSwipeActivity extends AppCompatActivity {
     swipeCardView.setOnItemClickListener(new SwipeCardView.OnItemClickListener() {
       @Override public void onItemClicked(int itemPosition, Object dataObject) {
         Card card = (Card) dataObject;
-        makeToast(CardSwipeActivity.this, card.name);
+        makeToast(getActivity(), card.name);
       }
     });
+    return mRootView;
   }
 
   private void getDummyData(ArrayList<Card> al) {
@@ -110,10 +116,6 @@ public class CardSwipeActivity extends AppCompatActivity {
     card11.name = "Card11";
     card11.imageId = R.drawable.faces11;
     al.add(card11);
-  }
-
-  static void makeToast(Context ctx, String s) {
-    Toast.makeText(ctx, s, Toast.LENGTH_SHORT).show();
   }
 
   @OnClick(R.id.top) public void top() {
