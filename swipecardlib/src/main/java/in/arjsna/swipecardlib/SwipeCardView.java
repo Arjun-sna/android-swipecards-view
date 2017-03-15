@@ -341,6 +341,14 @@ public class SwipeCardView extends BaseFlingAdapterView {
         }
     }
 
+    public void restart(){
+        currentAdapterCount = mAdapter.getCount();
+        adapterCount = currentAdapterCount;
+        START_STACK_FROM = 0;
+        LAST_OBJECT_IN_STACK = 0;
+        requestLayout();
+    }
+
     public FlingCardListener getTopCardListener() throws NullPointerException{
         if(flingCardListener==null){
             throw new NullPointerException();
