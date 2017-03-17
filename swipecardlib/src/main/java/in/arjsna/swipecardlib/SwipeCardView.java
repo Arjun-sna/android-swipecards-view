@@ -346,6 +346,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
         adapterCount = currentAdapterCount;
         START_STACK_FROM = 0;
         LAST_OBJECT_IN_STACK = 0;
+        layoutChildren(0,currentAdapterCount);
         requestLayout();
     }
 
