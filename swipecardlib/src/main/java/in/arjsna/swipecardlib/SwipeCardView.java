@@ -112,6 +112,14 @@ public class SwipeCardView extends BaseFlingAdapterView {
         return mActiveCard;
     }
 
+    public int getCurrentPosition(){
+        return START_STACK_FROM;
+    }
+
+    public Object getCurrentItem(){
+        return mAdapter.getItem(START_STACK_FROM);
+    }
+
     @Override
     public void requestLayout() {
         if (!mInLayout) {
