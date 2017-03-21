@@ -37,6 +37,13 @@
         android:layout_height="wrap_content"
         android:text="Throw Right"
         />
+    <Button
+        android:id="@+id/position"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="position"
+        />
   </LinearLayout>
   <LinearLayout
       android:layout_width="match_parent"
@@ -56,6 +63,14 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Throw Top"
+        />
+
+    <Button
+        android:id="@+id/restart"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="restart"
         />
   </LinearLayout>
   <!--<include layout="@layout/buttons" />-->
