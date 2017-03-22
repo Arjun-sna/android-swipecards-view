@@ -4,8 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import butterknife.OnClick;
 import in.arjsna.swipecardlib.SwipeCardView;
 import java.util.ArrayList;
@@ -16,12 +17,13 @@ public class CardSwipeActivity extends AppCompatActivity {
   private CardsAdapter arrayAdapter;
   private int i;
 
-  @InjectView(R.id.card_stack_view) SwipeCardView swipeCardView;
+  @BindView(R.id.card_stack_view)
+  public SwipeCardView swipeCardView;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_my);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     al = new ArrayList<>();
     getDummyData(al);
@@ -38,8 +40,7 @@ public class CardSwipeActivity extends AppCompatActivity {
       }
 
       @Override public void onAdapterAboutToEmpty(int itemsInAdapter) {
-        getDummyData(al);
-        arrayAdapter.notifyDataSetChanged();
+
       }
 
       @Override public void onScroll(float scrollProgressPercent) {
@@ -58,8 +59,7 @@ public class CardSwipeActivity extends AppCompatActivity {
     // Optionally add an OnItemClickListener
     swipeCardView.setOnItemClickListener(new SwipeCardView.OnItemClickListener() {
       @Override public void onItemClicked(int itemPosition, Object dataObject) {
-        Card card = (Card) dataObject;
-        makeToast(CardSwipeActivity.this, card.name);
+        makeToast(CardSwipeActivity.this, String.valueOf(swipeCardView.getCurrentPosition()));
       }
     });
   }
@@ -82,34 +82,6 @@ public class CardSwipeActivity extends AppCompatActivity {
     card4.name = "Card4";
     card4.imageId = R.drawable.faces4;
     al.add(card4);
-    Card card5 = new Card();
-    card5.name = "Card5";
-    card5.imageId = R.drawable.faces5;
-    al.add(card5);
-    Card card56 = new Card();
-    card56.name = "Card6";
-    card56.imageId = R.drawable.faces6;
-    al.add(card56);
-    Card card7 = new Card();
-    card7.name = "Card7";
-    card7.imageId = R.drawable.faces7;
-    al.add(card7);
-    Card card8 = new Card();
-    card8.name = "Card8";
-    card8.imageId = R.drawable.faces8;
-    al.add(card8);
-    Card card9 = new Card();
-    card9.name = "Card9";
-    card9.imageId = R.drawable.faces9;
-    al.add(card9);
-    Card card10 = new Card();
-    card10.name = "Card10";
-    card10.imageId = R.drawable.faces10;
-    al.add(card10);
-    Card card11 = new Card();
-    card11.name = "Card11";
-    card11.imageId = R.drawable.faces11;
-    al.add(card11);
   }
 
   static void makeToast(Context ctx, String s) {
@@ -133,5 +105,13 @@ public class CardSwipeActivity extends AppCompatActivity {
 
   @OnClick(R.id.right) public void right() {
     swipeCardView.throwRight();
+  }
+  @OnClick(R.id.restart) public void restart() {
+    swipeCardView.restart();
+  }
+
+  @OnClick(R.id.position)
+  public void toastCurrentPosition(){
+    makeToast(this, String.valueOf(swipeCardView.getCurrentPosition()));
   }
 }

@@ -2,8 +2,9 @@ package in.arjsna.swipecardsample;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.InjectView;
 import in.arjsna.swipecardlib.SwipePageView;
 import java.util.ArrayList;
 
@@ -12,12 +13,12 @@ public class PageSwipeActivity extends AppCompatActivity {
   private ArrayList<Card> al;
   private PageAdapter arrayAdapter;
 
-  @InjectView(R.id.page_swipe_view) SwipePageView flingContainer;
+  @BindView(R.id.page_swipe_view) SwipePageView flingContainer;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_page_swipe);
-    ButterKnife.inject(this);
+    ButterKnife.bind(this);
 
     al = new ArrayList<>();
     getDummyData(al);

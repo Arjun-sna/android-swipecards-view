@@ -32,6 +32,8 @@ public class SwipeCardView extends BaseFlingAdapterView {
 
     private float CURRENT_SCALE_VAL = 0;
 
+    private int INITIAL_MAX_VISIBLE = 3;
+
     private int MAX_VISIBLE = 3;
 
     private int MIN_ADAPTER_STACK = 6;
@@ -82,6 +84,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
         DETECT_RIGHT_SWIPE = a.getBoolean(R.styleable.SwipeCardView_right_swipe_detect, true);
         DETECT_BOTTOM_SWIPE = a.getBoolean(R.styleable.SwipeCardView_bottom_swipe_detect, true);
         DETECT_TOP_SWIPE = a.getBoolean(R.styleable.SwipeCardView_top_swipe_detect, true);
+        INITIAL_MAX_VISIBLE = MAX_VISIBLE;
         a.recycle();
     }
 
@@ -109,6 +112,14 @@ public class SwipeCardView extends BaseFlingAdapterView {
         return mActiveCard;
     }
 
+    public int getCurrentPosition(){
+        return START_STACK_FROM;
+    }
+
+    public Object getCurrentItem(){
+        return mAdapter.getItem(START_STACK_FROM);
+    }
+
     @Override
     public void requestLayout() {
         if (!mInLayout) {
@@ -123,6 +134,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
         if (mAdapter == null) {
             return;
         }
+
 
         mInLayout = true;
 
@@ -339,6 +351,16 @@ public class SwipeCardView extends BaseFlingAdapterView {
                 mActiveCard.setOnTouchListener(flingCardListener);
             }
         }
+    }
+
+    public void restart(){
+        currentAdapterCount = mAdapter.getCount();
+        adapterCount = currentAdapterCount;
+        START_STACK_FROM = 0;
+        LAST_OBJECT_IN_STACK = 0;
+        MAX_VISIBLE = INITIAL_MAX_VISIBLE;
+        layoutChildren(0,currentAdapterCount);
+        requestLayout();
     }
 
     public FlingCardListener getTopCardListener() throws NullPointerException{

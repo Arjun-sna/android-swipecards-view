@@ -6,6 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import in.arjsna.swipecardlib.SwipeCardView;
 import java.util.ArrayList;
@@ -16,19 +19,20 @@ import static in.arjsna.swipecardsample.CardSwipeActivity.makeToast;
  * Created by arjun on 6/3/17.
  */
 public class FragmentDemo extends Fragment {
-  private View mRootView;
 
   private ArrayList<Card> al;
   private CardsAdapter arrayAdapter;
   private int i;
 
+  @BindView(R.id.card_stack_view)
   SwipeCardView swipeCardView;
 
   @Nullable @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-    mRootView = inflater.inflate(R.layout.fragment_demo, container, false);
-    swipeCardView = (SwipeCardView) mRootView.findViewById(R.id.card_stack_view);
+    View mRootView = inflater.inflate(R.layout.fragment_demo, container, false);
+    ButterKnife.bind(this, mRootView);
+
     al = new ArrayList<>();
     getDummyData(al);
     arrayAdapter = new CardsAdapter(getActivity(), al);
@@ -135,5 +139,14 @@ public class FragmentDemo extends Fragment {
 
   @OnClick(R.id.right) public void right() {
     swipeCardView.throwRight();
+  }
+
+  @OnClick(R.id.restart) public void restart(){
+    swipeCardView.restart();
+  }
+
+  @OnClick(R.id.position)
+  public void toastCurrentPosition(){
+    makeToast(getActivity(), String.valueOf(swipeCardView.getCurrentPosition()));
   }
 }
