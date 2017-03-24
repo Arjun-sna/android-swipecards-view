@@ -4,17 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="in.arjsna.swipecardsample.HomeActivity">
-    <TextView
-        android:id="@+id/card_swipe_demo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Card Swipe Demo >"
-        android:padding="15.0dp"/>
-    <TextView
-        android:id="@+id/page_swipe_demo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Page Swipe Demo >"
-        android:padding="15.0dp"/>
+    tools:context="in.arjsna.swipecardsample.HomeActivity"
+    >
+  <TextView
+      android:id="@+id/card_swipe_demo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Card Swipe Demo >"
+      android:padding="15.0dp"
+      />
+  <TextView
+      android:id="@+id/card_swipe_fragment_demo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Card Swipe With fragment Demo >"
+      android:padding="15.0dp"
+      />
+  <TextView
+      android:id="@+id/page_swipe_demo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Page Swipe Demo >"
+      android:padding="15.0dp"
+      />
 </LinearLayout>

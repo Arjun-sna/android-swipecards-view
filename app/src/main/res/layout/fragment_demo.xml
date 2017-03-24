@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:text="Throw Top"
         />
+
     <Button
         android:id="@+id/restart"
         android:layout_width="0dp"
@@ -71,5 +73,7 @@
         android:text="restart"
         />
   </LinearLayout>
+  <!--<include layout="@layout/buttons" />-->
+
 </LinearLayout>
 
