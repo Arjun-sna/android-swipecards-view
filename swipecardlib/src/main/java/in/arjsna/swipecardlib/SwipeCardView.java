@@ -57,8 +57,6 @@ public class SwipeCardView extends BaseFlingAdapterView {
 
     private FlingCardListener flingCardListener;
 
-    private PointF mLastTouchPoint;
-
     private int mStartStackFrom = 0;
 
     private int adapterCount = 0;
@@ -199,10 +197,10 @@ public class SwipeCardView extends BaseFlingAdapterView {
             child.setScaleX(child.getScaleX() - mCurrentScaleVal);
             child.setScaleY(child.getScaleY() - mCurrentScaleVal);
             child.setY(child.getTranslationY() + mCurrentTransYVal);
+            mCurrentScaleVal += SCALE_OFFSET;
+            mCurrentTransYVal += TRANS_OFFSET;
         }
 
-        mCurrentScaleVal += SCALE_OFFSET;
-        mCurrentTransYVal += TRANS_OFFSET;
         addViewInLayout(child, 0, lp, true);
 
         final boolean needToMeasure = child.isLayoutRequested();
@@ -277,17 +275,18 @@ public class SwipeCardView extends BaseFlingAdapterView {
     */
     private void setTopView() {
         if (getChildCount() > 0) {
-            mActiveCard = getChildAt(mFirstObjectInStack);
+            mActiveCard = getChildAt(getChildCount() - 1);
             if (mActiveCard != null) {
                 flingCardListener = new FlingCardListener(this, mActiveCard, mAdapter.getItem(mStartStackFrom),
                         mRotationDegrees, new FlingCardListener.FlingListener() {
                     @Override
                     public void onCardExited() {
+                        removeViewInLayout(mActiveCard);
                         mActiveCard = null;
                         mStartStackFrom++;
                         mCurrentAdapterCount--;
-                        requestLayout();
-//                        resetTopCard();
+//                        requestLayout();
+                        resetTopCard();
                     }
 
                     @Override
@@ -340,14 +339,16 @@ public class SwipeCardView extends BaseFlingAdapterView {
         }
     }
 
-//    private void resetTopCard() {
-//        mFirstObjectInStack = mFirstObjectInStack - 1;
-//        View newUnderChild = mAdapter.getView(mFirstObjectInStack + , null, this);
-//        if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
-//            makeAndAddView(newUnderChild, true);
-//            mFirstObjectInStack = viewStack;
-//        }
-//    }
+    private void resetTopCard() {
+//        mFirstObjectInStack = getChildCount();
+        if (++mFirstObjectInStack < adapterCount) {
+            View newUnderChild = mAdapter.getView(mFirstObjectInStack, null, this);
+            if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
+                makeAndAddView(newUnderChild, true);
+            }
+        }
+        setTopView();
+    }
 
     public void restart(){
         mCurrentAdapterCount = mAdapter.getCount();
@@ -366,7 +367,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
         return flingCardListener;
     }
 
-    public void setmMaxVisible(int MAX_VISIBLE){
+    public void setMaxVisible(int MAX_VISIBLE){
         this.mMaxVisible = MAX_VISIBLE;
     }
 

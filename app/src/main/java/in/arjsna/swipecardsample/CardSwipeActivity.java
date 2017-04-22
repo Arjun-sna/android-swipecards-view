@@ -59,7 +59,7 @@ public class CardSwipeActivity extends AppCompatActivity {
     // Optionally add an OnItemClickListener
     swipeCardView.setOnItemClickListener(new SwipeCardView.OnItemClickListener() {
       @Override public void onItemClicked(int itemPosition, Object dataObject) {
-        makeToast(CardSwipeActivity.this, String.valueOf(swipeCardView.getCurrentPosition()));
+        makeToast(CardSwipeActivity.this, al.get(swipeCardView.getCurrentPosition()).name);
       }
     });
   }
@@ -82,6 +82,22 @@ public class CardSwipeActivity extends AppCompatActivity {
     card4.name = "Card4";
     card4.imageId = R.drawable.faces4;
     al.add(card4);
+    Card card5 = new Card();
+    card5.name = "Card5";
+    card5.imageId = R.drawable.faces4;
+    al.add(card5);
+    Card card6 = new Card();
+    card6.name = "Card6";
+    card6.imageId = R.drawable.faces4;
+    al.add(card6);
+    Card card7 = new Card();
+    card7.name = "Card7";
+    card7.imageId = R.drawable.faces4;
+    al.add(card7);
+    Card card8 = new Card();
+    card8.name = "Card8";
+    card8.imageId = R.drawable.faces4;
+    al.add(card8);
   }
 
   static void makeToast(Context ctx, String s) {
