@@ -140,24 +140,11 @@ public class SwipeCardView extends BaseFlingAdapterView {
         if (adapterCount == 0) {
             removeAllViewsInLayout();
         } else {
-            View topCard = getChildAt(mFirstObjectInStack);
-            if (mActiveCard != null && topCard != null && topCard == mActiveCard) {
-                if (this.flingCardListener.isTouching()) {
-                    PointF lastPoint = this.flingCardListener.getLastPoint();
-                    if (this.mLastTouchPoint == null || !this.mLastTouchPoint.equals(lastPoint)) {
-                        this.mLastTouchPoint = lastPoint;
-                        removeViewsInLayout(0, mFirstObjectInStack);
-                        layoutChildren(1, adapterCount);
-                    }
-                }
-            } else {
-                // Reset the UI and set top view listener
-                removeAllViewsInLayout();
-                layoutChildren(mStartStackFrom, adapterCount);
-                setTopView();
-            }
+            // Reset the UI and set top view listener
+            removeAllViewsInLayout();
+            layoutChildren(mStartStackFrom, adapterCount);
+            setTopView();
         }
-
         mInLayout = false;
 
         if(mCurrentAdapterCount <= mMinAdapterStack) mFlingListener.onAdapterAboutToEmpty(mCurrentAdapterCount);
@@ -300,6 +287,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
                         mStartStackFrom++;
                         mCurrentAdapterCount--;
                         requestLayout();
+//                        resetTopCard();
                     }
 
                     @Override
@@ -351,6 +339,15 @@ public class SwipeCardView extends BaseFlingAdapterView {
             }
         }
     }
+
+//    private void resetTopCard() {
+//        mFirstObjectInStack = mFirstObjectInStack - 1;
+//        View newUnderChild = mAdapter.getView(mFirstObjectInStack + , null, this);
+//        if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
+//            makeAndAddView(newUnderChild, true);
+//            mFirstObjectInStack = viewStack;
+//        }
+//    }
 
     public void restart(){
         mCurrentAdapterCount = mAdapter.getCount();
