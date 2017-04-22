@@ -202,18 +202,18 @@ public class FlingCardListener implements View.OnTouchListener {
     }
 
     private boolean resetCardViewOnStack() {
-        if (movedBeyondLeftBorder() && parentView.DETECT_LEFT_SWIPE) {
+        if (movedBeyondLeftBorder() && parentView.mDetectLeftSwipe) {
             // Left Swipe
             onSelectedX(true, getExitPoint(-objectW), 100);
             mFlingListener.onScroll(-1.0f);
-        } else if (movedBeyondRightBorder() && parentView.DETECT_RIGHT_SWIPE) {
+        } else if (movedBeyondRightBorder() && parentView.mDetectRightSwipe) {
             // Right Swipe
             onSelectedX(false, getExitPoint(parentWidth), 100);
             mFlingListener.onScroll(1.0f);
-        } else if(movedBeyondTopBorder() && parentView.DETECT_TOP_SWIPE){
+        } else if(movedBeyondTopBorder() && parentView.mDetectTopSwipe){
             onSelectedY(true, getExitPointX(-objectH), 100);
             mFlingListener.onScroll(-1.0f);
-        } else if(movedBeyondBottomBorder() && parentView.DETECT_BOTTOM_SWIPE){
+        } else if(movedBeyondBottomBorder() && parentView.mDetectBottomSwipe){
             onSelectedY(false, getExitPointX(parentHeight), 100);
             mFlingListener.onScroll(1.0f);
         }
