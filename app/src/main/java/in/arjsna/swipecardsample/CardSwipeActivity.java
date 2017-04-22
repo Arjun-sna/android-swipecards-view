@@ -40,7 +40,9 @@ public class CardSwipeActivity extends AppCompatActivity {
       }
 
       @Override public void onAdapterAboutToEmpty(int itemsInAdapter) {
-
+        System.out.println("Adapter Empty");
+        getDummyData(al);
+        arrayAdapter.notifyDataSetChanged();
       }
 
       @Override public void onScroll(float scrollProgressPercent) {
