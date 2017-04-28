@@ -19,6 +19,7 @@ public class CardSwipeActivity extends AppCompatActivity {
 
   @BindView(R.id.card_stack_view)
   public SwipeCardView swipeCardView;
+  private int count = 0;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,8 +42,11 @@ public class CardSwipeActivity extends AppCompatActivity {
 
       @Override public void onAdapterAboutToEmpty(int itemsInAdapter) {
         System.out.println("Adapter Empty");
-        getDummyData(al);
-        arrayAdapter.notifyDataSetChanged();
+        if (count++ == 4) {
+          count = 0;
+          getDummyData(al);
+          arrayAdapter.notifyDataSetChanged();
+        }
       }
 
       @Override public void onScroll(float scrollProgressPercent) {
