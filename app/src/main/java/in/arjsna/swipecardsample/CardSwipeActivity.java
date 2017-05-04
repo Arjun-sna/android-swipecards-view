@@ -2,6 +2,7 @@ package in.arjsna.swipecardsample;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -10,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import in.arjsna.swipecardlib.SwipeCardView;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 public class CardSwipeActivity extends AppCompatActivity {
 
@@ -42,11 +44,20 @@ public class CardSwipeActivity extends AppCompatActivity {
 
       @Override public void onAdapterAboutToEmpty(int itemsInAdapter) {
         System.out.println("Adapter Empty");
-        if (count++ == 4) {
-          count = 0;
-          getDummyData(al);
-          arrayAdapter.notifyDataSetChanged();
+        //if (count++ == 4) {
+        //  count = 0;
+        //  getDummyData(al);
+        //  arrayAdapter.notifyDataSetChanged();
+        //}
+        if (count++ != 0) {
+          return;
         }
+        new Handler().postDelayed(new TimerTask() {
+          @Override public void run() {
+              getDummyData(al);
+              arrayAdapter.notifyDataSetChanged();
+          }
+        }, 5000);
       }
 
       @Override public void onScroll(float scrollProgressPercent) {

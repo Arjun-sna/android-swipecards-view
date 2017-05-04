@@ -291,7 +291,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
           @Override public void onCardExited() {
 
             //                        requestLayout();
-            resetTopCard();
+            removeTopCard();
           }
 
           @Override public void leftExit(Object dataObject) {
@@ -338,15 +338,21 @@ public class SwipeCardView extends BaseFlingAdapterView {
     }
   }
 
-  private void resetTopCard() {
+  private void removeTopCard() {
     removeViewInLayout(mActiveCard);
     mActiveCard = null;
     mTopOfStack++;
     mCurrentAdapterCount--;
     checkForAdapterCount();
+    resetCards();
+  }
+
+  private void resetCards() {
     layoutMissingChildren();
     setTopView();
   }
+
+
 
   public void restart() {
     mCurrentAdapterCount = mAdapter.getCount();
@@ -410,6 +416,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
       int newAdapterCount = mAdapter.getCount();
       mCurrentAdapterCount += newAdapterCount - adapterCount;
       adapterCount = newAdapterCount;
+      resetCards();
     }
 
     @Override public void onInvalidated() {
