@@ -25,10 +25,6 @@ public class SwipeCardView extends BaseFlingAdapterView {
 
   protected boolean mDetectLeftSwipe;
 
-  private float mCurrentTransYVal = 0;
-
-  private float mCurrentScaleVal = 0;
-
   private int mInitialMaxVisible = 3;
 
   private int mMaxVisible = 3;
@@ -149,7 +145,6 @@ public class SwipeCardView extends BaseFlingAdapterView {
   }
 
   private void layoutChildren(int startingIndex, int adapterCount) {
-    resetOffsets(startingIndex);
     int maxVisible = mMaxVisible;
     if (adapterCount < maxVisible) {
       maxVisible = adapterCount;
@@ -180,24 +175,27 @@ public class SwipeCardView extends BaseFlingAdapterView {
     }
   }
 
-  private void resetOffsets(int startingIndex) {
-    mCurrentTransYVal = TRANS_OFFSET *  startingIndex;
-    mCurrentScaleVal = (float) (SCALE_OFFSET * startingIndex);
+  private float getScaleValue() {
+    int currentChildCount = getChildCount();
+    return (float) (SCALE_OFFSET * currentChildCount);
+  }
+
+  private float getTransValue() {
+    int currentChildCount = getChildCount();
+    return (float) (TRANS_OFFSET * currentChildCount);
   }
 
   @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
   private void makeAndAddView(View child, boolean isBase) {
     FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
     if (isBase) {
-      child.setScaleX((float) (child.getScaleX() - (mCurrentScaleVal - SCALE_OFFSET)));
-      child.setScaleY((float) (child.getScaleY() - (mCurrentScaleVal - SCALE_OFFSET)));
-      child.setY(child.getTranslationY() + mCurrentTransYVal - TRANS_OFFSET);
+      child.setScaleX((float) (child.getScaleX() - (getScaleValue() - SCALE_OFFSET)));
+      child.setScaleY((float) (child.getScaleY() - (getScaleValue() - SCALE_OFFSET)));
+      child.setY(child.getTranslationY() + getTransValue() - TRANS_OFFSET);
     } else {
-      child.setScaleX(child.getScaleX() - mCurrentScaleVal);
-      child.setScaleY(child.getScaleY() - mCurrentScaleVal);
-      child.setY(child.getTranslationY() + mCurrentTransYVal);
-      mCurrentScaleVal += SCALE_OFFSET;
-      mCurrentTransYVal += TRANS_OFFSET;
+      child.setScaleX(child.getScaleX() - getScaleValue());
+      child.setScaleY(child.getScaleY() - getScaleValue());
+      child.setY(child.getTranslationY() + getTransValue());
     }
 
     addViewInLayout(child, 0, lp, true);
