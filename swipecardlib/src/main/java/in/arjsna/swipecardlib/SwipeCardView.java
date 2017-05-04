@@ -175,6 +175,21 @@ public class SwipeCardView extends BaseFlingAdapterView {
     }
   }
 
+  public void layoutMissingChildren() {
+    while(getChildCount() < mMaxVisible && (mLastObjectInStack + 1) < adapterCount) {
+      View newUnderChild = mAdapter.getView(++mLastObjectInStack, null, this);
+      if (newUnderChild.getVisibility() != GONE) {
+        makeAndAddView(newUnderChild, false);
+      }
+    }
+    if (mLastObjectInStack + 1 < adapterCount) {
+      View newUnderChild = mAdapter.getView(++mLastObjectInStack, null, this);
+      if (newUnderChild.getVisibility() != GONE) {
+        makeAndAddView(newUnderChild, true);
+      }
+    }
+  }
+
   private float getScaleValue() {
     int currentChildCount = getChildCount();
     return (float) (SCALE_OFFSET * currentChildCount);
@@ -329,12 +344,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
     mTopOfStack++;
     mCurrentAdapterCount--;
     checkForAdapterCount();
-    if (getChildCount() <= mMaxVisible && ++mLastObjectInStack < adapterCount) {
-      View newUnderChild = mAdapter.getView(mLastObjectInStack, null, this);
-      if (newUnderChild != null && newUnderChild.getVisibility() != GONE) {
-        makeAndAddView(newUnderChild, true);
-      }
-    }
+    layoutMissingChildren();
     setTopView();
   }
 
@@ -400,9 +410,6 @@ public class SwipeCardView extends BaseFlingAdapterView {
       int newAdapterCount = mAdapter.getCount();
       mCurrentAdapterCount += newAdapterCount - adapterCount;
       adapterCount = newAdapterCount;
-      if (mLastObjectInStack - mTopOfStack < mMaxVisible) {
-        layoutChildren(mLastObjectInStack - mTopOfStack, adapterCount);
-      }
     }
 
     @Override public void onInvalidated() {
