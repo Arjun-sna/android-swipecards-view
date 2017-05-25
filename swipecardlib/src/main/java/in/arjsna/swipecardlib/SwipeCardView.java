@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.FrameLayout;
 
-public class SwipeCardView extends BaseFlingAdapterView {
+public class SwipeCardView extends BaseFlingAdapterView implements SwipeableView {
 
   private static final double SCALE_OFFSET = 0.04;
 
@@ -409,6 +409,26 @@ public class SwipeCardView extends BaseFlingAdapterView {
 
   @Override public LayoutParams generateLayoutParams(AttributeSet attrs) {
     return new FrameLayout.LayoutParams(getContext(), attrs);
+  }
+
+  @Override
+  public boolean detectBottomSwipe() {
+    return mDetectBottomSwipe;
+  }
+
+  @Override
+  public boolean detectTopSwipe() {
+    return mDetectTopSwipe;
+  }
+
+  @Override
+  public boolean detectLeftSwipe() {
+    return mDetectLeftSwipe;
+  }
+
+  @Override
+  public boolean detectRightSwipe() {
+    return mDetectRightSwipe;
   }
 
   private class AdapterDataSetObserver extends DataSetObserver {

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-  <string name="app_name">Swipe cards</string>
-  <string name="hello_world">Hello world</string>
-  <string name="title_activity_home">HomeActivity</string>
-  <string name="title_activity_page_swipe">PageSwipeActivity</string>
-  <string name="hello_world_2">Tation tacimates ad est. Tempor oblique labores ad mei, scripta evertitur eam ei. Admodum eleifend id quo. Nusquam corpora nostrum no sea, ne reque intellegam definitionem mei. Tation aliquam has ad, nihil persecuti intellegam mea ne. Vide recteque cum ei, per summo doming ex.</string>
+    <string name="app_name">Swipe cards</string>
+    <string name="hello_world">Hello world</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_page_swipe">PageSwipeActivity</string>
+    <string name="hello_world_2">Tation tacimates ad est. Tempor oblique labores ad mei, scripta evertitur eam ei. Admodum eleifend id quo. Nusquam corpora nostrum no sea, ne reque intellegam definitionem mei. Tation aliquam has ad, nihil persecuti intellegam mea ne. Vide recteque cum ei, per summo doming ex.</string>
+    <string name="title_activity_single_card_swipe">SingleCardSwipeActivity</string>
 
 </resources>

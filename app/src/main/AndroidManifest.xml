@@ -2,28 +2,34 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="in.arjsna.swipecardsample">
 
-  <application
-      android:allowBackup="true"
-      android:icon="@drawable/ic_launcher"
-      android:label="@string/app_name"
-      android:theme="@style/AppTheme">
-    <activity
-        android:name=".CardSwipeActivity"
-        android:label="@string/app_name"></activity>
-    <activity
-        android:name=".HomeActivity"
-        android:label="@string/app_name">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN"/>
-        <category android:name="android.intent.category.LAUNCHER"/>
-      </intent-filter>
-    </activity>
-    <activity android:name=".CardSwipeWithFragment">
-    </activity>
-    <activity
-        android:name=".PageSwipeActivity"
-        android:label="@string/app_name">
-    </activity>
-  </application>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".CardSwipeActivity"
+            android:label="@string/app_name" />
+        <activity
+            android:name=".HomeActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".CardSwipeWithFragment"></activity>
+        <activity
+            android:name=".PageSwipeActivity"
+            android:label="@string/app_name"></activity>
+        <activity
+            android:name=".SingleCardSwipeActivity"
+            android:label="@string/title_activity_single_card_swipe"></activity>
+        <activity
+            android:name=".SingleCardSwipeCustomActivity"
+            android:theme="@style/Translucent"
+            android:label="@string/title_activity_single_card_swipe"></activity>
+    </application>
 
 </manifest>
