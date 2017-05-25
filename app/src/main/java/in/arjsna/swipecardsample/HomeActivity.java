@@ -28,5 +28,17 @@ public class HomeActivity extends Activity {
         startActivity(intent);
       }
     });
+    findViewById(R.id.single_card_swipe_demo).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(HomeActivity.this, SingleCardSwipeActivity.class);
+        startActivity(intent);
+      }
+    });
+    findViewById(R.id.single_card_swipe_custom_demo).setOnClickListener(new View.OnClickListener() {
+      @Override public void onClick(View v) {
+        Intent intent = new Intent(HomeActivity.this, SingleCardSwipeCustomActivity.class);
+        startActivity(intent);
+      }
+    });
   }
 }

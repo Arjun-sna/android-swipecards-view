@@ -27,4 +27,18 @@
       android:text="Page Swipe Demo >"
       android:padding="15.0dp"
       />
+  <TextView
+      android:id="@+id/single_card_swipe_demo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Single Card Swipe Demo >"
+      android:padding="15.0dp"
+      />
+  <TextView
+      android:id="@+id/single_card_swipe_custom_demo"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Single Card Swipe Custom Demo >"
+      android:padding="15.0dp"
+      />
 </LinearLayout>
