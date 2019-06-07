@@ -1,9 +1,9 @@
 # SwipeCardsView [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-SwipeCardsView-green.svg?style=true)](https://android-arsenal.com/details/1/4141) [ ![Download](https://api.bintray.com/packages/arjun-sna/maven/swipecardview/images/download.svg) ](https://bintray.com/arjun-sna/maven/swipecardview/_latestVersion)
 
-##Demo
-<img src="https://rawgit.com/Arjun-sna/Arjun-sna.github.io/master/raw/swipecarddemo.gif" width="250" />
+## Demo
+<img src="https://i.imgur.com/dpMxcWG.gif" width="250" />
 
-##Installation
+## Installation
 ```
 repositories {
     jcenter()
@@ -14,7 +14,7 @@ dependencies {
 }
 ```
 
-##Usage
+## Usage
 Add `SwipeCardView` to the layout xml file where it is needed
 ```xml
 <in.arjsna.swipecardlib.SwipeCardView
