@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.PointF;
 import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -115,7 +116,6 @@ public class SwipePageView extends BaseFlingAdapterView {
         CURRENT_SCALE_VAL = 0;
     }
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void makeAndAddView(View child) {
 
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
@@ -149,7 +149,7 @@ public class SwipePageView extends BaseFlingAdapterView {
         }
 
 
-        int layoutDirection = getLayoutDirection();
+        int layoutDirection = ViewCompat.getLayoutDirection(this);
         final int absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);
         final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
 

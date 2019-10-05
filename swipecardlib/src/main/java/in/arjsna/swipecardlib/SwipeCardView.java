@@ -1,13 +1,11 @@
 package in.arjsna.swipecardlib;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.database.DataSetObserver;
 import android.graphics.PointF;
-import android.os.Build;
+import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Adapter;
@@ -202,7 +200,6 @@ public class SwipeCardView extends BaseFlingAdapterView {
     }
 
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void makeAndAddView(View child, boolean isBase) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) child.getLayoutParams();
         if (isBase) {
@@ -242,7 +239,7 @@ public class SwipeCardView extends BaseFlingAdapterView {
         }
 
 
-        int layoutDirection = getLayoutDirection();
+        int layoutDirection = ViewCompat.getLayoutDirection(this);
         final int absoluteGravity = Gravity.getAbsoluteGravity(gravity, layoutDirection);
         final int verticalGravity = gravity & Gravity.VERTICAL_GRAVITY_MASK;
 
